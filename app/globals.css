@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Premium Clinic Theme - Brand Colors */
+  --background: oklch(99% 0 0);
+  --foreground: oklch(15% 0 0);
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(15% 0 0);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(15% 0 0);
+  /* Primary: #a0c558 - Verde claro/oliva */
+  --primary: oklch(76% 0.13 115);
+  --primary-foreground: oklch(100% 0 0);
+  --secondary: oklch(96% 0.005 90);
+  --secondary-foreground: oklch(15% 0 0);
+  --muted: oklch(97% 0.002 90);
+  --muted-foreground: oklch(45% 0.01 90);
+  /* Accent: #00b0b3 - Turquesa/cyan */
+  --accent: oklch(66% 0.16 195);
+  --accent-foreground: oklch(100% 0 0);
+  --destructive: oklch(65% 0.25 25);
+  --destructive-foreground: oklch(100% 0 0);
+  --border: oklch(92% 0.005 90);
+  --input: oklch(95% 0.003 90);
+  --ring: oklch(76% 0.13 115);
+  --radius: 0.5rem;
+  /* Brand gradient: verde a turquesa */
+  --brand-light: oklch(76% 0.13 115);
+  --brand-dark: oklch(66% 0.16 195);
+}
+
+.dark {
+  --background: oklch(8% 0.01 90);
+  --foreground: oklch(98% 0 0);
+  --card: oklch(12% 0.01 90);
+  --card-foreground: oklch(98% 0 0);
+  --popover: oklch(12% 0.01 90);
+  --popover-foreground: oklch(98% 0 0);
+  /* Primary: verde más brillante para dark mode */
+  --primary: oklch(78% 0.13 115);
+  --primary-foreground: oklch(8% 0.01 90);
+  --secondary: oklch(18% 0.01 90);
+  --secondary-foreground: oklch(98% 0 0);
+  --muted: oklch(15% 0.01 90);
+  --muted-foreground: oklch(65% 0.01 90);
+  /* Accent: turquesa más brillante para dark mode */
+  --accent: oklch(70% 0.16 195);
+  --accent-foreground: oklch(8% 0.01 90);
+  --destructive: oklch(65% 0.25 25);
+  --destructive-foreground: oklch(98% 0 0);
+  --border: oklch(25% 0.01 90);
+  --input: oklch(20% 0.01 90);
+  --ring: oklch(78% 0.13 115);
+}
+
+@theme inline {
+  --font-sans: "Geist", "Geist Fallback";
+  --font-mono: "Geist Mono", "Geist Mono Fallback";
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .gradient-brand {
+    background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+  }
+  .text-gradient-brand {
+    background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-gold {
+    /* Mantener compatibilidad pero usar brand colors */
+    background: linear-gradient(135deg, var(--brand-light), var(--brand-dark));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
