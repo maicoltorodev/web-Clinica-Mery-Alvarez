@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { PROFESSIONAL_IMAGE_FILTER, MERY_IMAGE_SIZES } from "@/lib/constants"
 
 interface HeroImageProps {
@@ -11,6 +12,7 @@ interface HeroImageProps {
  * Componente reutilizable para la imagen de Mery en el hero
  */
 export function HeroImage({ variant = 'mobile', className = '' }: HeroImageProps) {
+  const [imageLoaded, setImageLoaded] = useState(false)
   const sizeClass = variant === 'mobile' ? MERY_IMAGE_SIZES.mobile : MERY_IMAGE_SIZES.desktop
   const displayClass = variant === 'mobile' ? 'lg:hidden' : 'hidden lg:flex'
   
@@ -28,11 +30,17 @@ export function HeroImage({ variant = 'mobile', className = '' }: HeroImageProps
           
           {/* Main image container */}
           <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-background to-muted/30">
+            {/* Skeleton loader */}
+            {!imageLoaded && (
+              <div className={`${sizeClass} h-auto bg-muted animate-pulse`} style={{ aspectRatio: 'auto' }} />
+            )}
+            
             <img
               src="/mery.png"
               alt="Clínica Mery Álvarez"
-              className={`${sizeClass} h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02]`}
+              className={`${sizeClass} h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02] ${imageLoaded ? 'opacity-100' : 'opacity-0 absolute'}`}
               style={PROFESSIONAL_IMAGE_FILTER}
+              onLoad={() => setImageLoaded(true)}
             />
             {/* Professional overlay for depth */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
