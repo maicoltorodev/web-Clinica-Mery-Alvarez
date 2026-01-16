@@ -21,9 +21,9 @@ export function Hero() {
           {/* Center - Content */}
           <div className="w-full text-center px-2 sm:px-0 order-1 lg:order-2">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 sm:mb-8">
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/20 border-2 border-primary/40 shadow-lg shadow-primary/10 backdrop-blur-sm mb-6 sm:mb-8">
               <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
-              <span className="text-xs sm:text-sm font-medium text-primary">Excelencia Médica desde 1999</span>
+              <span className="text-xs sm:text-sm font-semibold text-primary">Excelencia Médica desde 1999</span>
             </div>
 
             {/* Main Heading - Título */}
