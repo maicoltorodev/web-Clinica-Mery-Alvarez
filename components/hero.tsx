@@ -17,16 +17,16 @@ export function Hero() {
 
       {/* Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex lg:grid lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-16 items-center max-w-7xl mx-auto">
+        <div className="flex flex-col lg:grid lg:grid-cols-[1fr_1.5fr] gap-8 sm:gap-12 lg:gap-16 items-center max-w-7xl mx-auto">
           {/* Left Side - Image */}
-          <div className="hidden lg:flex justify-start flex-shrink-0">
-            <div className="relative w-full max-w-md group">
+          <div className="flex justify-center lg:justify-start flex-shrink-0 w-full lg:w-auto">
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md group">
               {/* Decorative border elements */}
               <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-60 group-hover:opacity-80 transition-opacity" />
               <div className="absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl" />
               
               {/* Main image container */}
-              <div className="relative bg-gradient-to-br from-background to-muted/50 p-4 rounded-xl shadow-2xl border border-border/50">
+              <div className="relative bg-gradient-to-br from-background to-muted/50 p-3 sm:p-4 rounded-xl shadow-2xl border border-border/50">
                 <div className="relative overflow-hidden rounded-lg">
                   <img
                     src="/mery.png"
@@ -102,13 +102,6 @@ export function Hero() {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <div className="w-6 h-10 border-2 border-foreground/20 rounded-full flex justify-center">
-          <div className="w-1 h-3 bg-foreground/40 rounded-full mt-2" />
         </div>
       </div>
     </section>

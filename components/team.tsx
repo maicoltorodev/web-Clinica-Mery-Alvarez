@@ -9,7 +9,7 @@ const teamMembers = [
     role: "Especialista en Tratamientos Faciales",
     specialization: "Dermatología Estética",
     credentials: "Médico Especialista",
-    experience: "12+ años",
+    experience: "12+ años de experiencia",
     image: "/personal/personal-carlos.png",
   },
   {
@@ -17,7 +17,7 @@ const teamMembers = [
     role: "Directora Médica",
     specialization: "Medicina Estética",
     credentials: "Médica Especialista",
-    experience: "27+ años",
+    experience: "27+ años de experiencia",
     image: "/personal/personal-mery.png",
   },
   {
@@ -25,7 +25,7 @@ const teamMembers = [
     role: "Especialista en Medicina Corporal",
     specialization: "Medicina Estética Corporal",
     credentials: "Médica Especialista",
-    experience: "10+ años",
+    experience: "10+ años de experiencia",
     image: "/personal/personal-ana.png",
   },
 ]
@@ -48,8 +48,14 @@ export function Team() {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-6 max-w-5xl mx-auto">
           {teamMembers.map((member, index) => {
             const { elementRef, isInCenter } = useInViewportCenter(0.35)
+            // Mery (índice 1) debe aparecer primero en mobile, pero mantener su posición en desktop
+            const isMery = member.name === "Dra. Mery Álvarez"
             return (
-            <div key={index} ref={elementRef} className="group relative">
+            <div 
+              key={index} 
+              ref={elementRef} 
+              className={`group relative ${isMery ? 'order-first md:order-none' : ''}`}
+            >
               {/* Decorative border elements - same as hero */}
               <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
               <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`} />

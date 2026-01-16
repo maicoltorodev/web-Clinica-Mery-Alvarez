@@ -48,14 +48,13 @@ export function Header() {
           <div className="flex-1 flex justify-center lg:hidden px-4">
             <Button 
               size="sm" 
-              className="gap-2 h-9 text-xs sm:text-sm px-3 sm:px-4"
+              className="gap-2 h-9 text-xs sm:text-sm px-2 sm:px-4"
               onClick={() => {
                 document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })
               }}
             >
               <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span className="hidden xs:inline">Agendar Cita</span>
-              <span className="xs:hidden">Cita</span>
+              <span>Agendar Cita</span>
             </Button>
           </div>
 
@@ -99,7 +98,7 @@ export function Header() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden pb-6 border-t border-border mt-4 pt-6 animate-in slide-in-from-top-2">
+          <div className="lg:hidden pb-6 border-t border-border mt-4 pt-6 animate-in slide-in-from-top-2 bg-white/98 backdrop-blur-md -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
             <nav className="flex flex-col space-y-3">
               {navItems.map((item) => (
                 <a
@@ -111,12 +110,6 @@ export function Header() {
                   {item.label}
                 </a>
               ))}
-              <div className="flex flex-col space-y-2 pt-4 border-t border-border mt-2">
-                <Button className="w-full gap-2 h-11 text-base">
-                  <Calendar className="h-5 w-5" />
-                  <span>Agendar Cita</span>
-                </Button>
-              </div>
             </nav>
           </div>
         )}

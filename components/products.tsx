@@ -1,8 +1,9 @@
 "use client"
 
+import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ShoppingCart, ArrowRight, Sparkles } from "lucide-react"
+import { ShoppingCart, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react"
 import { useInViewportCenter } from "@/lib/hooks"
 
 const products = [
@@ -65,6 +66,7 @@ const products = [
 ]
 
 const categories = [
+  { name: "Todos", count: products.length },
   { name: "Línea Antiedad", count: 6 },
   { name: "Línea Capilar", count: 3 },
   { name: "Línea Corporal", count: 2 },
@@ -74,12 +76,43 @@ const categories = [
 ]
 
 export function Products() {
+  const [selectedCategory, setSelectedCategory] = useState("Todos")
+  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0)
+
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("es-CO", {
       style: "currency",
       currency: "COP",
       minimumFractionDigits: 0,
     }).format(price)
+  }
+
+  // Filtrar productos según la categoría seleccionada
+  const filteredProducts = selectedCategory === "Todos" 
+    ? products 
+    : products.filter(product => product.category === selectedCategory)
+
+  // Navegación del carrusel
+  const handlePrevious = () => {
+    setCurrentCategoryIndex((prev) => {
+      const newIndex = prev === 0 ? categories.length - 1 : prev - 1
+      setSelectedCategory(categories[newIndex].name)
+      return newIndex
+    })
+  }
+
+  const handleNext = () => {
+    setCurrentCategoryIndex((prev) => {
+      const newIndex = prev === categories.length - 1 ? 0 : prev + 1
+      setSelectedCategory(categories[newIndex].name)
+      return newIndex
+    })
+  }
+
+  // Manejar clic en categoría (desktop)
+  const handleCategoryClick = (categoryName: string, index: number) => {
+    setSelectedCategory(categoryName)
+    setCurrentCategoryIndex(index)
   }
 
   return (
@@ -101,31 +134,83 @@ export function Products() {
         </div>
 
         {/* Categories */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-10 sm:mb-12">
-          {categories.map((category, index) => (
-            <div key={index} className="group relative">
-              {/* Decorative border elements - same as hero */}
-              <div className="absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-xl blur-lg opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none z-0" />
-              <div className="absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
-              
-              <Card className="border-border/50 hover:border-transparent transition-all duration-300 cursor-pointer relative z-10">
-                <CardContent className="p-3 sm:p-4 text-center relative">
-                  {/* Corner accent decorations */}
-                  <div className="absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-accent rounded-tl-md opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none z-20" />
-                  <div className="absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none z-20" />
-                <h3 className="font-semibold text-xs sm:text-sm mb-1 group-hover:text-primary transition-colors leading-tight">
-                  {category.name}
-                </h3>
-                <p className="text-xs text-muted-foreground">{category.count} productos</p>
-              </CardContent>
-              </Card>
+        {/* Mobile: Carrusel */}
+        <div className="lg:hidden mb-10 sm:mb-12">
+          <div className="relative flex items-center justify-center gap-4">
+            {/* Botón anterior */}
+            <button
+              onClick={handlePrevious}
+              className="p-2 rounded-full bg-background border border-border hover:bg-muted transition-colors flex-shrink-0 z-10"
+              aria-label="Categoría anterior"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+
+            {/* Categoría actual */}
+            <div className="flex-1 max-w-xs">
+              <div className="group relative">
+                {/* Decorative border elements - same as hero */}
+                <div className="absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-xl blur-lg opacity-60 transition-opacity duration-300 pointer-events-none z-0" />
+                <div className="absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
+                
+                <Card className="border-primary/50 hover:border-transparent transition-all duration-300 relative z-10">
+                  <CardContent className="p-4 text-center relative">
+                    {/* Corner accent decorations */}
+                    <div className="absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-accent rounded-tl-md opacity-60 transition-opacity duration-300 pointer-events-none z-20" />
+                    <div className="absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md opacity-60 transition-opacity duration-300 pointer-events-none z-20" />
+                    <h3 className="font-semibold text-sm mb-1 text-primary transition-colors leading-tight">
+                      {categories[currentCategoryIndex].name}
+                    </h3>
+                    <p className="text-xs text-muted-foreground">{categories[currentCategoryIndex].count} productos</p>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
-          ))}
+
+            {/* Botón siguiente */}
+            <button
+              onClick={handleNext}
+              className="p-2 rounded-full bg-background border border-border hover:bg-muted transition-colors flex-shrink-0 z-10"
+              aria-label="Categoría siguiente"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Desktop: Grid de categorías */}
+        <div className="hidden lg:grid lg:grid-cols-7 gap-3 sm:gap-4 mb-10 sm:mb-12">
+          {categories.map((category, index) => {
+            const isActive = selectedCategory === category.name
+            return (
+              <div 
+                key={index} 
+                className="group relative cursor-pointer"
+                onClick={() => handleCategoryClick(category.name, index)}
+              >
+                {/* Decorative border elements - same as hero */}
+                <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-xl blur-lg transition-opacity duration-300 pointer-events-none z-0 ${isActive ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'}`} />
+                <div className={`absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg transition-opacity duration-300 pointer-events-none z-0 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                
+                <Card className={`border-border/50 hover:border-transparent transition-all duration-300 relative z-10 ${isActive ? 'border-primary/50' : ''}`}>
+                  <CardContent className="p-3 sm:p-4 text-center relative">
+                    {/* Corner accent decorations */}
+                    <div className={`absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-accent rounded-tl-md transition-opacity duration-300 pointer-events-none z-20 ${isActive ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'}`} />
+                    <div className={`absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md transition-opacity duration-300 pointer-events-none z-20 ${isActive ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'}`} />
+                    <h3 className={`font-semibold text-xs sm:text-sm mb-1 transition-colors leading-tight ${isActive ? 'text-primary' : 'group-hover:text-primary'}`}>
+                      {category.name}
+                    </h3>
+                    <p className="text-xs text-muted-foreground">{category.count} productos</p>
+                  </CardContent>
+                </Card>
+              </div>
+            )
+          })}
         </div>
 
         {/* Featured Products */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10 sm:mb-12">
-          {products.map((product, index) => {
+          {filteredProducts.map((product, index) => {
             const { elementRef, isInCenter } = useInViewportCenter(0.35)
             return (
               <div key={index} ref={elementRef} className="group relative">
