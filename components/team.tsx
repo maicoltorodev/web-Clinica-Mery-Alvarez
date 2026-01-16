@@ -65,9 +65,9 @@ export function Team() {
               
               <Card className="border-2 border-border/50 hover:border-primary/30 transition-colors duration-300 overflow-hidden relative z-10 hover:shadow-2xl hover:shadow-primary/10 bg-card">
                 {/* Image container with border design */}
-                <div className="relative aspect-[3/4] overflow-visible bg-transparent p-2 lg:group-hover:p-3 transition-[padding] duration-300">
+                <div className="relative aspect-[3/4] overflow-visible bg-transparent p-2">
                   {/* Main image container - same style as hero */}
-                  <div className="relative bg-gradient-to-br from-background to-muted/50 p-2.5 sm:p-3 lg:group-hover:p-3.5 rounded-xl shadow-xl lg:shadow-2xl border-2 border-border/50 lg:group-hover:border-primary/40 transition-colors duration-300 h-full lg:group-hover:shadow-primary/20">
+                  <div className="relative bg-gradient-to-br from-background to-muted/50 p-2.5 sm:p-3 rounded-xl shadow-xl lg:shadow-2xl border-2 border-border/50 lg:group-hover:border-primary/40 transition-colors duration-300 h-full lg:group-hover:shadow-primary/20">
                     {/* Efecto de brillo sutil en hover - solo desktop */}
                     <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-accent/0 lg:group-hover:from-primary/5 lg:group-hover:via-primary/0 lg:group-hover:to-accent/5 rounded-xl transition-opacity duration-300 pointer-events-none z-0 hidden lg:block" />
                     
