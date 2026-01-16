@@ -98,16 +98,16 @@ export function SocialMedia() {
                 className="block h-full"
               >
                 {/* Decorative border elements */}
-                <div className={`absolute -inset-4 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
-                <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`} />
+                <div className={`absolute -inset-4 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
+                <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-100`} />
                 
                 <div className="relative bg-card border border-border/50 hover:border-transparent rounded-2xl p-6 sm:p-8 transition-all duration-300 hover:shadow-2xl overflow-hidden z-10 h-full flex flex-col">
                   {/* Background gradient overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${network.gradient} transition-opacity duration-300 ${isInCenter ? 'opacity-5 lg:opacity-0 lg:group-hover:opacity-5' : 'opacity-0 lg:group-hover:opacity-5'}`} />
+                  <div className={`absolute inset-0 bg-gradient-to-br ${network.gradient} transition-opacity duration-300 ${isInCenter ? 'opacity-5' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-5`} />
                   
                   {/* Corner accent decorations */}
-                  <div className={`absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
-                  <div className={`absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
+                  <div className={`absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
+                  <div className={`absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
                   
                   {/* Icon */}
                   <div className="mb-4 sm:mb-6 relative z-10">

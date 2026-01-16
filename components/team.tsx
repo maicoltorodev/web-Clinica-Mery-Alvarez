@@ -50,7 +50,7 @@ export function Team() {
         </div>
 
         {/* Team Grid */}
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-6 max-w-5xl mx-auto">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-8 xl:gap-10 max-w-6xl xl:max-w-7xl mx-auto">
           {teamMembers.map((member, index) => {
             const { elementRef, isInCenter } = useInViewportCenter(0.35)
             // Mery (índice 1) debe aparecer primero en mobile, pero mantener su posición en desktop
@@ -62,8 +62,8 @@ export function Team() {
               className={`group relative ${isMery ? 'order-first md:order-none' : ''}`}
             >
               {/* Decorative border elements - same as hero */}
-              <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
-              <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`} />
+              <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
+              <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-100`} />
               
               <Card className="border-border/50 hover:border-transparent transition-all duration-300 overflow-hidden relative z-10">
                 {/* Image container with border design */}
@@ -77,7 +77,7 @@ export function Team() {
                         className="w-full h-full object-cover relative z-10"
                       />
                       {/* Subtle overlay gradient - activa en mobile y desktop */}
-                      <div className={`absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 transition-opacity duration-300 pointer-events-none z-10 ${isInCenter ? 'opacity-100 lg:opacity-50 lg:group-hover:opacity-100' : 'opacity-50 lg:group-hover:opacity-100'}`} />
+                      <div className={`absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 transition-opacity duration-300 pointer-events-none z-10 ${isInCenter ? 'opacity-100' : 'opacity-50'} lg:opacity-50 lg:group-hover:opacity-100`} />
                       
                       {/* Logo badge */}
                       <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 bg-background/95 backdrop-blur-sm p-1.5 sm:p-2 rounded-lg shadow-lg border border-border/50">
@@ -90,8 +90,8 @@ export function Team() {
                     </div>
                     
                     {/* Corner accent decorations - same as hero */}
-                    <div className={`absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
-                    <div className={`absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
+                    <div className={`absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
+                    <div className={`absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
                   </div>
                 </div>
               <CardContent className="p-4 sm:p-6 text-center sm:text-left">

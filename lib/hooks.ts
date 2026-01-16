@@ -38,6 +38,9 @@ export function ViewportCenterProvider({ children }: { children: React.ReactNode
   }, [])
 
   useEffect(() => {
+    // Verificar si estamos en desktop (lg breakpoint = 1024px)
+    const isDesktop = () => window.innerWidth >= 1024
+
     const checkPositions = () => {
       const viewportHeight = window.innerHeight
       const viewportCenter = viewportHeight / 2
@@ -84,6 +87,7 @@ export function ViewportCenterProvider({ children }: { children: React.ReactNode
       }
     }
 
+    // Activar eventos tanto en mobile como desktop
     window.addEventListener("scroll", handleScroll, { passive: true })
     window.addEventListener("resize", handleScroll, { passive: true })
     checkPositions() // Verificar inicialmente
@@ -141,6 +145,9 @@ export function useInViewportCenter(threshold: number = 0.4, elementId?: string)
       }
     } else {
       // Fallback al comportamiento original si no hay contexto
+      // Verificar si estamos en desktop (lg breakpoint = 1024px)
+      const isDesktop = () => window.innerWidth >= 1024
+
       const checkPosition = () => {
         const rect = element.getBoundingClientRect()
         const viewportHeight = window.innerHeight
@@ -154,6 +161,7 @@ export function useInViewportCenter(threshold: number = 0.4, elementId?: string)
         setIsInCenter(isNearCenter && isVisible)
       }
 
+      // Activar eventos tanto en mobile como desktop
       window.addEventListener("scroll", checkPosition, { passive: true })
       window.addEventListener("resize", checkPosition, { passive: true })
       checkPosition()
