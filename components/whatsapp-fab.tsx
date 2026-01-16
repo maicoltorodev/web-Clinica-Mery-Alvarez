@@ -72,7 +72,7 @@ export function WhatsAppFAB() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-6 right-6 lg:bottom-8 lg:right-8 z-50 flex flex-col items-end gap-3">
       {/* Message Tooltip */}
       {showMessage && (
         <div className="bg-card border border-border shadow-2xl rounded-2xl p-4 min-w-[280px] animate-in slide-in-from-bottom-5 duration-300 relative">
@@ -91,7 +91,7 @@ export function WhatsAppFAB() {
       )}
 
       {/* WhatsApp Button */}
-      <div className="relative w-14 h-14">
+      <div className="relative w-14 h-14 lg:w-20 lg:h-20">
         {/* Pulse effect - solo para el botón */}
         <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-accent to-primary animate-ping opacity-75" />
         <div className="absolute inset-0 rounded-full bg-gradient-to-r from-primary via-accent to-primary animate-pulse opacity-50" />
@@ -101,10 +101,10 @@ export function WhatsAppFAB() {
           href="https://wa.me/573163433000"
           target="_blank"
           rel="noopener noreferrer"
-          className="relative w-14 h-14 rounded-full gradient-brand shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group hover:scale-110 z-10 block"
+          className="relative w-14 h-14 lg:w-20 lg:h-20 rounded-full gradient-brand shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center group hover:scale-110 z-10 block"
           aria-label="Contactar por WhatsApp"
         >
-          <MessageCircle className="h-7 w-7 text-white relative z-10" />
+          <MessageCircle className="h-7 w-7 lg:h-10 lg:w-10 text-white relative z-10" />
         </a>
       </div>
     </div>
