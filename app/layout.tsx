@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     description: "Excelencia en Medicina Estética. Donde la excelencia estética y médica se encuentran",
     images: [
       {
-        url: "/metadata.jpg",
+        url: "/imagen-metadata.jpg",
         width: 1200,
         height: 630,
         alt: "Clínica Mery Álvarez - Excelencia en Medicina Estética",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     description: "Excelencia en Medicina Estética. Donde la excelencia estética y médica se encuentran",
     images: [
       {
-        url: "/metadata.jpg",
+        url: "/imagen-metadata.jpg",
         alt: "Clínica Mery Álvarez - Excelencia en Medicina Estética",
       },
     ],
