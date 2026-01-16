@@ -1,7 +1,8 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { Star, Quote } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Star, Quote, ArrowRight } from "lucide-react"
 import { useInViewportCenter } from "@/lib/hooks"
 
 const testimonials = [
@@ -80,6 +81,14 @@ export function Testimonials() {
               </Card>
             </div>
           )})}
+        </div>
+
+        {/* CTA Button */}
+        <div className="text-center mt-10 sm:mt-12">
+          <Button size="lg" variant="outline" className="gap-2 h-12 sm:h-11 w-full sm:w-auto text-base">
+            Ver todos los testimonios
+            <ArrowRight className="h-5 w-5" />
+          </Button>
         </div>
       </div>
     </section>

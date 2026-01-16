@@ -45,7 +45,7 @@ const products = [
   {
     name: "Emulsión Triactiva Facial",
     price: 83000,
-    category: "Línea Antiedad",
+    category: "Línea Revitalizante",
     image: "/productos/emulsion-triactiva.jpeg",
     featured: true,
   },
@@ -219,14 +219,14 @@ export function Products() {
               <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`} />
               
               <Card className="border-border/50 hover:border-transparent transition-all duration-300 hover:shadow-xl overflow-hidden relative z-10">
-                <div className="relative aspect-square bg-gradient-to-br from-muted/50 to-muted/30 p-3 sm:p-4 flex items-center justify-center overflow-hidden">
+                <div className="relative aspect-square bg-white p-3 sm:p-4 flex items-center justify-center overflow-hidden">
                   {/* Corner accent decorations */}
                   <div className={`absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
                   <div className={`absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-3/4 h-3/4 object-contain transition-transform duration-300 group-hover:scale-110"
+                    className={`w-3/4 h-3/4 object-contain transition-transform duration-300 ${isInCenter ? 'scale-110 lg:scale-100 lg:group-hover:scale-110' : 'lg:group-hover:scale-110'}`}
                   />
                   <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
                     <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border border-primary/20 backdrop-blur-sm">
