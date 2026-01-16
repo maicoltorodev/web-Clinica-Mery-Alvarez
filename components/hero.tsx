@@ -1,16 +1,13 @@
 "use client"
 
-import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Calendar, ArrowRight, Sparkles } from "lucide-react"
 
 export function Hero() {
-  const [mobileImageLoaded, setMobileImageLoaded] = useState(false)
-  const [desktopImageLoaded, setDesktopImageLoaded] = useState(false)
   return (
     <section
       id="inicio"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30 pt-16 sm:pt-20"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30 pt-24 sm:pt-20"
     >
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -22,7 +19,7 @@ export function Hero() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col lg:grid lg:grid-cols-[1fr_1.5fr] gap-8 sm:gap-12 lg:gap-16 items-center max-w-7xl mx-auto">
           {/* Center - Content */}
-          <div className="w-full text-center px-2 sm:px-0 order-1 lg:order-2">
+          <div className="w-full text-center order-1 lg:order-2">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/20 border-2 border-primary/40 shadow-lg shadow-primary/10 backdrop-blur-sm mb-6 sm:mb-8">
               <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
@@ -40,36 +37,25 @@ export function Hero() {
 
             {/* Image - Mobile only, below title */}
             <div className="flex justify-center lg:hidden mb-6 sm:mb-8">
-              <div className="relative w-full max-w-[200px] sm:max-w-[240px] group">
-                {/* Decorative border elements */}
-                <div className="absolute -inset-3 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-xl blur-lg opacity-60 group-hover:opacity-80 transition-opacity" />
-                <div className="absolute -inset-1.5 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg" />
+              <div className="relative group inline-block">
+                {/* Enhanced decorative border elements - more prominent for importance */}
+                <div className="absolute -inset-6 bg-gradient-to-br from-primary/30 via-accent/30 to-primary/30 rounded-3xl blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none z-0" />
+                <div className="absolute -inset-4 bg-gradient-to-br from-primary/25 via-accent/25 to-primary/25 rounded-2xl blur-xl opacity-80 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
+                <div className="absolute -inset-2 bg-gradient-to-br from-primary/40 to-accent/40 rounded-xl transition-all duration-300 pointer-events-none z-0 opacity-100 group-hover:from-primary/50 group-hover:to-accent/50" />
                 
-                {/* Main image container */}
-                <div className="relative bg-gradient-to-br from-background to-muted/50 p-2 sm:p-3 rounded-lg shadow-xl border border-border/50">
-                  <div className="relative overflow-hidden rounded-md aspect-[3/4]">
-                    {/* Skeleton */}
-                    {!mobileImageLoaded && (
-                      <div className="absolute inset-0 flex items-center justify-center z-0">
-                        <div className="w-3/4 h-3/4 bg-gradient-to-br from-muted to-muted/50 animate-pulse rounded-md" />
-                      </div>
-                    )}
-                    
-                    <img
-                      src="/mery.png"
-                      alt="Clínica Mery Álvarez"
-                      className={`w-full h-full object-contain relative z-10 transition-opacity duration-300 ${
-                        mobileImageLoaded ? "opacity-100" : "opacity-0"
-                      }`}
-                      onLoad={() => setMobileImageLoaded(true)}
-                    />
-                    {/* Subtle overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 pointer-events-none z-10" />
-                  </div>
-                  
-                  {/* Corner accent decorations */}
-                  <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary rounded-tl-md opacity-60" />
-                  <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md opacity-60" />
+                {/* Professional image container with enhanced border and shadow */}
+                <div className="relative z-10 rounded-xl overflow-hidden bg-gradient-to-br from-background to-muted/30 shadow-2xl shadow-primary/15 group-hover:shadow-primary/25 border-2 border-primary/30 group-hover:border-primary/40 transition-all duration-500">
+                  <img
+                    src="/mery.png"
+                    alt="Clínica Mery Álvarez"
+                    className="w-[260px] sm:w-[320px] h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02]"
+                    style={{
+                      filter: 'contrast(1.05) saturate(1.08) brightness(1.03)',
+                      imageRendering: 'crisp-edges',
+                    }}
+                  />
+                  {/* Professional overlay for depth */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </div>
             </div>
@@ -117,36 +103,25 @@ export function Hero() {
 
           {/* Left Side - Image - Desktop only */}
           <div className="hidden lg:flex justify-start flex-shrink-0 w-full lg:w-auto order-1">
-            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md group">
-              {/* Decorative border elements */}
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-60 group-hover:opacity-80 transition-opacity" />
-              <div className="absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl" />
+            <div className="relative group inline-block">
+              {/* Enhanced decorative border elements - more prominent for importance */}
+              <div className="absolute -inset-6 bg-gradient-to-br from-primary/30 via-accent/30 to-primary/30 rounded-3xl blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none z-0" />
+              <div className="absolute -inset-4 bg-gradient-to-br from-primary/25 via-accent/25 to-primary/25 rounded-2xl blur-xl opacity-80 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
+              <div className="absolute -inset-2 bg-gradient-to-br from-primary/40 to-accent/40 rounded-xl transition-all duration-300 pointer-events-none z-0 opacity-100 group-hover:from-primary/50 group-hover:to-accent/50" />
               
-              {/* Main image container */}
-              <div className="relative bg-gradient-to-br from-background to-muted/50 p-3 sm:p-4 rounded-xl shadow-2xl border border-border/50">
-                <div className="relative overflow-hidden rounded-lg aspect-[3/4]">
-                  {/* Skeleton */}
-                  {!desktopImageLoaded && (
-                    <div className="absolute inset-0 flex items-center justify-center z-0">
-                      <div className="w-3/4 h-3/4 bg-gradient-to-br from-muted to-muted/50 animate-pulse rounded-lg" />
-                    </div>
-                  )}
-                  
-                  <img
-                    src="/mery.png"
-                    alt="Clínica Mery Álvarez"
-                    className={`w-full h-full object-contain relative z-10 transition-opacity duration-300 ${
-                      desktopImageLoaded ? "opacity-100" : "opacity-0"
-                    }`}
-                    onLoad={() => setDesktopImageLoaded(true)}
-                  />
-                  {/* Subtle overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 pointer-events-none z-10" />
-                </div>
-                
-                {/* Corner accent decorations */}
-                <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary rounded-tl-lg opacity-60" />
-                <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg opacity-60" />
+              {/* Professional image container with enhanced border and shadow */}
+              <div className="relative z-10 rounded-xl overflow-hidden bg-gradient-to-br from-background to-muted/30 shadow-2xl shadow-primary/15 group-hover:shadow-primary/25 border-2 border-primary/30 group-hover:border-primary/40 transition-all duration-500">
+                <img
+                  src="/mery.png"
+                  alt="Clínica Mery Álvarez"
+                  className="w-[380px] h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02]"
+                  style={{
+                    filter: 'contrast(1.05) saturate(1.08) brightness(1.03)',
+                    imageRendering: 'crisp-edges',
+                  }}
+                />
+                {/* Professional overlay for depth */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             </div>
           </div>
