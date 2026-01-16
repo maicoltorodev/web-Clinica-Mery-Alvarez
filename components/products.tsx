@@ -112,19 +112,7 @@ const ProductCard = memo(function ProductCard({ product }: { product: typeof pro
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0 px-4 pb-4">
-          <Button 
-            className="w-full gap-2 transition-colors h-10 sm:h-11 text-sm sm:text-base !text-background hover:!text-background"
-            style={{ 
-              backgroundImage: 'none !important',
-              background: '#5ab78b !important'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'var(--accent) !important';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = '#5ab78b !important';
-            }}
-          >
+          <Button className={`w-full gap-2 transition-colors h-10 sm:h-11 text-sm sm:text-base ${isInCenter ? '!bg-accent !text-background' : ''} lg:!bg-gradient-to-r lg:!from-primary lg:!to-accent lg:!text-background lg:group-hover:!bg-accent lg:group-hover:!text-background`}>
             <ShoppingCart className="h-4 w-4" />
             Añadir al carrito
           </Button>
