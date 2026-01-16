@@ -6,6 +6,7 @@ import { Products } from "@/components/products"
 import { Team } from "@/components/team"
 import { Testimonials } from "@/components/testimonials"
 import { SocialMedia } from "@/components/social-media"
+import { CTAClosing } from "@/components/cta-closing"
 import { Footer } from "@/components/footer"
 import { WhatsAppFAB } from "@/components/whatsapp-fab"
 
@@ -20,6 +21,7 @@ export default function Home() {
       <Team />
       <Testimonials />
       <SocialMedia />
+      <CTAClosing />
       <Footer />
       <WhatsAppFAB />
     </main>
