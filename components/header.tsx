@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Calendar } from "lucide-react"
+import { Menu, X, Calendar, ShoppingBag, Users, Sparkles, UserCheck, MessageSquare, Phone } from "lucide-react"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -17,12 +17,12 @@ export function Header() {
   }, [])
 
   const navItems = [
-    { label: "Inicio", href: "#inicio" },
-    { label: "Nosotros", href: "#nosotros" },
-    { label: "Tratamientos", href: "#tratamientos" },
-    { label: "Equipo", href: "#equipo" },
-    { label: "Testimonios", href: "#testimonios" },
-    { label: "Contacto", href: "#contacto" },
+    { label: "Nosotros", href: "#nosotros", icon: Users },
+    { label: "Tratamientos", href: "#tratamientos", icon: Sparkles },
+    { label: "Productos", href: "#productos", icon: ShoppingBag },
+    { label: "Equipo", href: "#equipo", icon: UserCheck },
+    { label: "Testimonios", href: "#testimonios", icon: MessageSquare },
+    { label: "Contacto", href: "#contacto", icon: Phone },
   ]
 
   return (
@@ -60,16 +60,20 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-base font-semibold text-foreground hover:text-primary transition-colors relative group"
-              >
-                {item.label}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const Icon = item.icon
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="flex items-center gap-2 text-base font-semibold text-foreground hover:text-primary transition-colors relative group"
+                >
+                  <Icon className="h-4 w-4" />
+                  {item.label}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all group-hover:w-full" />
+                </a>
+              )
+            })}
           </nav>
 
           {/* Desktop CTA Button */}
@@ -96,22 +100,72 @@ export function Header() {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile Menu Overlay */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden pb-6 border-t border-border mt-4 pt-6 animate-in slide-in-from-top-2 bg-white/98 backdrop-blur-md -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
-            <nav className="flex flex-col space-y-3">
-              {navItems.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="text-base font-semibold text-foreground hover:text-primary transition-colors py-2 px-1 rounded-md hover:bg-muted/50"
+          <>
+            {/* Backdrop */}
+            <div 
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+            
+            {/* Menu Panel */}
+            <div className="lg:hidden fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-out animate-in slide-in-from-right">
+              {/* Header del menú */}
+              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border bg-gradient-to-r from-primary/5 to-accent/5">
+                <img
+                  src="/logo.png"
+                  alt="Clínica Mery Álvarez"
+                  className="h-8 sm:h-10 w-auto object-contain"
+                />
+                <button
                   onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2 rounded-lg hover:bg-muted transition-colors"
+                  aria-label="Cerrar menú"
                 >
-                  {item.label}
-                </a>
-              ))}
-            </nav>
-          </div>
+                  <X className="h-6 w-6 text-foreground" />
+                </button>
+              </div>
+
+              {/* Navigation Items */}
+              <nav className="flex flex-col p-4 sm:p-6 overflow-y-auto">
+                {navItems.map((item, index) => {
+                  const Icon = item.icon
+                  return (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      className="group flex items-center gap-4 px-4 py-4 rounded-xl hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all duration-200 mb-2"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      style={{ animationDelay: `${index * 50}ms` }}
+                    >
+                      <div className="flex-shrink-0 p-2.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
+                        <Icon className="h-5 w-5 text-primary" />
+                      </div>
+                      <span className="text-base font-semibold text-foreground group-hover:text-primary transition-colors flex-1">
+                        {item.label}
+                      </span>
+                      <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-primary/20 group-hover:bg-primary transition-colors opacity-0 group-hover:opacity-100" />
+                    </a>
+                  )
+                })}
+              </nav>
+
+              {/* Footer del menú */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 border-t border-border bg-muted/30">
+                <Button 
+                  className="w-full gap-2 h-12 text-base font-semibold"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false)
+                    document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })
+                  }}
+                >
+                  <Calendar className="h-5 w-5" />
+                  <span>Agendar Cita</span>
+                </Button>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </header>

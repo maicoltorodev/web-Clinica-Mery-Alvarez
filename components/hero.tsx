@@ -27,12 +27,38 @@ export function Hero() {
             </div>
 
             {/* Main Heading - Título */}
-            <div className="mb-6 sm:mb-8 flex justify-center">
+            <div className="mb-4 sm:mb-6 lg:mb-8 flex justify-center">
               <img
                 src="/titulo.png"
                 alt="Clínica Mery Álvarez"
                 className="h-24 xs:h-28 sm:h-36 md:h-44 lg:h-56 xl:h-64 w-auto object-contain max-w-full px-2"
               />
+            </div>
+
+            {/* Image - Mobile only, below title */}
+            <div className="flex justify-center lg:hidden mb-6 sm:mb-8">
+              <div className="relative w-full max-w-[200px] sm:max-w-[240px] group">
+                {/* Decorative border elements */}
+                <div className="absolute -inset-3 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-xl blur-lg opacity-60 group-hover:opacity-80 transition-opacity" />
+                <div className="absolute -inset-1.5 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg" />
+                
+                {/* Main image container */}
+                <div className="relative bg-gradient-to-br from-background to-muted/50 p-2 sm:p-3 rounded-lg shadow-xl border border-border/50">
+                  <div className="relative overflow-hidden rounded-md">
+                    <img
+                      src="/mery.png"
+                      alt="Clínica Mery Álvarez"
+                      className="w-full h-auto object-contain relative z-10"
+                    />
+                    {/* Subtle overlay gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+                  </div>
+                  
+                  {/* Corner accent decorations */}
+                  <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-primary rounded-tl-md opacity-60" />
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md opacity-60" />
+                </div>
+              </div>
             </div>
 
             {/* Description */}
@@ -77,8 +103,8 @@ export function Hero() {
             </div>
           </div>
 
-          {/* Left Side - Image */}
-          <div className="flex justify-center lg:justify-start flex-shrink-0 w-full lg:w-auto order-2 lg:order-1">
+          {/* Left Side - Image - Desktop only */}
+          <div className="hidden lg:flex justify-start flex-shrink-0 w-full lg:w-auto order-1">
             <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md group">
               {/* Decorative border elements */}
               <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-60 group-hover:opacity-80 transition-opacity" />

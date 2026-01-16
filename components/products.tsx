@@ -1,10 +1,53 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react"
 import { useInViewportCenter } from "@/lib/hooks"
+
+// Componente separado para cada producto para mantener hooks estables
+function ProductCard({ product, formatPrice }: { product: typeof products[0], formatPrice: (price: number) => string }) {
+  const { elementRef, isInCenter } = useInViewportCenter(0.35, `product-${product.id}`)
+  
+  return (
+    <div key={product.id} ref={elementRef} className="group relative">
+      {/* Decorative border elements - same as hero */}
+      <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
+      <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`} />
+      
+      <Card className="border-border/50 hover:border-transparent transition-all duration-300 hover:shadow-xl overflow-hidden relative z-10">
+        <div className="relative aspect-square bg-white p-3 sm:p-4 flex items-center justify-center overflow-hidden">
+          {/* Corner accent decorations */}
+          <div className={`absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
+          <div className={`absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
+          <img
+            src={product.image}
+            alt={product.name}
+            className={`w-3/4 h-3/4 object-contain transition-transform duration-300 ${isInCenter ? 'scale-110 lg:scale-100 lg:group-hover:scale-110' : 'lg:group-hover:scale-110'}`}
+          />
+          <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
+            <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border border-primary/20 backdrop-blur-sm">
+              {product.category.split(" ")[1]}
+            </span>
+          </div>
+        </div>
+        <CardHeader className="pb-2 sm:pb-3 px-4 pt-4">
+          <CardTitle className="text-base sm:text-lg mb-2 line-clamp-2 leading-tight">{product.name}</CardTitle>
+          <CardDescription className="text-primary font-semibold text-base sm:text-lg">
+            {formatPrice(product.price)}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="pt-0 px-4 pb-4">
+          <Button className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors h-10 sm:h-11 text-sm sm:text-base">
+            <ShoppingCart className="h-4 w-4" />
+            Añadir al carrito
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
 
 const products = [
   {
@@ -95,10 +138,12 @@ export function Products() {
     }).format(price)
   }
 
-  // Filtrar productos según la categoría seleccionada
-  const filteredProducts = selectedCategory === "Todos" 
-    ? products 
-    : products.filter(product => product.category === selectedCategory)
+  // Filtrar productos según la categoría seleccionada (memoizado para evitar re-renders innecesarios)
+  const filteredProducts = useMemo(() => {
+    return selectedCategory === "Todos" 
+      ? products 
+      : products.filter(product => product.category === selectedCategory)
+  }, [selectedCategory])
 
   // Navegación del carrusel
   const handlePrevious = () => {
@@ -218,46 +263,9 @@ export function Products() {
 
         {/* Featured Products */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10 sm:mb-12">
-          {filteredProducts.map((product) => {
-            const { elementRef, isInCenter } = useInViewportCenter(0.35, `product-${product.id}`)
-            return (
-              <div key={product.id} ref={elementRef} className="group relative">
-              {/* Decorative border elements - same as hero */}
-              <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
-              <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`} />
-              
-              <Card className="border-border/50 hover:border-transparent transition-all duration-300 hover:shadow-xl overflow-hidden relative z-10">
-                <div className="relative aspect-square bg-white p-3 sm:p-4 flex items-center justify-center overflow-hidden">
-                  {/* Corner accent decorations */}
-                  <div className={`absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
-                  <div className={`absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className={`w-3/4 h-3/4 object-contain transition-transform duration-300 ${isInCenter ? 'scale-110 lg:scale-100 lg:group-hover:scale-110' : 'lg:group-hover:scale-110'}`}
-                  />
-                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
-                    <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border border-primary/20 backdrop-blur-sm">
-                      {product.category.split(" ")[1]}
-                    </span>
-                  </div>
-                </div>
-              <CardHeader className="pb-2 sm:pb-3 px-4 pt-4">
-                <CardTitle className="text-base sm:text-lg mb-2 line-clamp-2 leading-tight">{product.name}</CardTitle>
-                <CardDescription className="text-primary font-semibold text-base sm:text-lg">
-                  {formatPrice(product.price)}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0 px-4 pb-4">
-                <Button className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors h-10 sm:h-11 text-sm sm:text-base">
-                  <ShoppingCart className="h-4 w-4" />
-                  Añadir al carrito
-                </Button>
-              </CardContent>
-              </Card>
-              </div>
-            )
-          })}
+          {filteredProducts.map((product) => (
+            <ProductCard key={product.id} product={product} formatPrice={formatPrice} />
+          ))}
         </div>
 
         {/* CTA */}
