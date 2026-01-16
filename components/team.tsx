@@ -62,33 +62,33 @@ export function Team() {
             >
               <DecorativeBorders isActive={isInCenter} />
               
-              <Card className="border-2 border-border/50 hover:border-primary/30 transition-all duration-500 overflow-hidden relative z-10 hover:shadow-2xl hover:shadow-primary/10 bg-card">
+              <Card className="border-2 border-border/50 hover:border-primary/30 transition-colors duration-300 overflow-hidden relative z-10 hover:shadow-2xl hover:shadow-primary/10 bg-card">
                 {/* Image container with border design */}
-                <div className="relative aspect-[3/4] overflow-visible bg-transparent p-2 lg:group-hover:p-3 transition-all duration-500">
+                <div className="relative aspect-[3/4] overflow-visible bg-transparent p-2 lg:group-hover:p-3 transition-[padding] duration-300">
                   {/* Main image container - same style as hero */}
-                  <div className="relative bg-gradient-to-br from-background to-muted/50 p-2.5 sm:p-3 lg:group-hover:p-3.5 rounded-xl shadow-2xl border-2 border-border/50 lg:group-hover:border-primary/40 transition-all duration-500 h-full lg:group-hover:shadow-primary/20">
+                  <div className="relative bg-gradient-to-br from-background to-muted/50 p-2.5 sm:p-3 lg:group-hover:p-3.5 rounded-xl shadow-2xl border-2 border-border/50 lg:group-hover:border-primary/40 transition-all duration-300 h-full lg:group-hover:shadow-primary/20">
                     {/* Efecto de brillo sutil en hover */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-accent/0 lg:group-hover:from-primary/5 lg:group-hover:via-primary/0 lg:group-hover:to-accent/5 rounded-xl transition-all duration-500 pointer-events-none z-0" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/0 to-accent/0 lg:group-hover:from-primary/5 lg:group-hover:via-primary/0 lg:group-hover:to-accent/5 rounded-xl transition-opacity duration-300 pointer-events-none z-0" />
                     
                     <div className="relative overflow-hidden rounded-lg h-full">
                       <img
                         src={member.image}
                         alt={member.name}
-                        className="w-full h-full object-cover relative z-10 transition-all duration-500 lg:group-hover:brightness-105"
+                        className="w-full h-full object-cover relative z-10 transition-[filter] duration-300 lg:group-hover:brightness-105"
                       />
                       {/* Subtle overlay gradient - siempre visible pero más intenso cuando está activo */}
-                      <div className={`absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 transition-opacity duration-500 pointer-events-none z-10 ${
+                      <div className={`absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 transition-opacity duration-300 pointer-events-none z-10 ${
                         isInCenter 
                           ? 'opacity-100' 
                           : 'opacity-50 lg:group-hover:opacity-100'
                       }`} />
                       
-                      {/* Logo badge con efecto hover */}
-                      <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 bg-background/95 backdrop-blur-sm p-1.5 sm:p-2 rounded-lg shadow-lg border border-border/50 transition-all duration-500 lg:group-hover:scale-110 lg:group-hover:shadow-xl lg:group-hover:border-primary/30">
+                      {/* Logo badge sin fondo - solo el logo */}
+                      <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 transition-transform duration-300 lg:group-hover:scale-110">
                         <img
                           src="/logo.png"
                           alt="Clínica Mery Álvarez"
-                          className="h-6 sm:h-8 w-auto object-contain transition-transform duration-500"
+                          className="h-6 sm:h-8 w-auto object-contain drop-shadow-lg"
                         />
                       </div>
                     </div>
@@ -96,31 +96,31 @@ export function Team() {
                     <CornerDecorations isActive={isInCenter} size="medium" position="outside" />
                   </div>
                 </div>
-              <CardContent className="p-4 sm:p-6 text-center sm:text-left transition-all duration-500">
+              <CardContent className="p-4 sm:p-6 text-center">
                 <div className="mb-3 sm:mb-4">
-                  <h3 className={`text-lg sm:text-xl font-bold mb-1 transition-colors duration-500 ${
+                  <h3 className={`text-lg sm:text-xl font-bold mb-1 transition-colors duration-300 ${
                     isInCenter 
                       ? 'text-primary' 
                       : 'lg:group-hover:text-primary'
                   }`}>
                     {member.name}
                   </h3>
-                  <p className={`text-xs sm:text-sm font-medium mb-1 sm:mb-2 transition-colors duration-500 ${
+                  <p className={`text-xs sm:text-sm font-medium mb-1 sm:mb-2 transition-colors duration-300 ${
                     isInCenter 
                       ? 'text-primary' 
                       : 'text-primary lg:group-hover:text-accent'
                   }`}>
                     {member.role}
                   </p>
-                  <p className="text-xs sm:text-sm text-muted-foreground mb-1 lg:group-hover:text-foreground/80 transition-colors duration-500">
+                  <p className="text-xs sm:text-sm text-muted-foreground mb-1 lg:group-hover:text-foreground/80 transition-colors duration-300">
                     {member.specialization}
                   </p>
-                  <p className="text-xs text-muted-foreground lg:group-hover:text-foreground/70 transition-colors duration-500">
+                  <p className="text-xs text-muted-foreground lg:group-hover:text-foreground/70 transition-colors duration-300">
                     {member.credentials}
                   </p>
                 </div>
-                <div className="pt-3 sm:pt-4 border-t border-border lg:group-hover:border-primary/20 transition-colors duration-500">
-                  <span className="text-xs sm:text-sm text-muted-foreground lg:group-hover:text-primary/80 transition-colors duration-500 font-medium">
+                <div className="pt-3 sm:pt-4 border-t border-border lg:group-hover:border-primary/20 transition-colors duration-300">
+                  <span className="text-xs sm:text-sm text-muted-foreground lg:group-hover:text-primary/80 transition-colors duration-300 font-medium">
                     {member.experience}
                   </span>
                 </div>
