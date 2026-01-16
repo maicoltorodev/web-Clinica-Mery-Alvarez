@@ -63,9 +63,8 @@ export function Hero() {
 
             {/* Description */}
             <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto text-balance px-2">
-              Somos una IPS que busca transformar tu vida desde el interior, brindando experiencias de salud y bienestar 
-              a través de tratamientos personalizados realizados por profesionales con productos especializados y tecnología 
-              de vanguardia, con el objetivo de resaltar tu belleza y promover estilos de vida saludable.
+              Transformamos tu vida desde el interior con tratamientos personalizados de medicina estética, 
+              tecnología de vanguardia y productos especializados para resaltar tu belleza natural.
             </p>
 
             {/* CTA Buttons */}

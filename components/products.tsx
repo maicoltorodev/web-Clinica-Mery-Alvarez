@@ -199,24 +199,33 @@ export function Products() {
               <ChevronLeft className="h-5 w-5" />
             </button>
 
-            {/* Categoría actual */}
-            <div className="flex-1 max-w-xs">
-              <div className="group relative">
-                {/* Decorative border elements - same as hero */}
-                <div className="absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-xl blur-lg opacity-60 transition-opacity duration-300 pointer-events-none z-0" />
-                <div className="absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
-                
-                <Card className="border-primary/50 hover:border-transparent transition-all duration-300 relative z-10">
-                  <CardContent className="p-4 text-center relative">
-                    {/* Corner accent decorations */}
-                    <div className="absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-accent rounded-tl-md opacity-60 transition-opacity duration-300 pointer-events-none z-20" />
-                    <div className="absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md opacity-60 transition-opacity duration-300 pointer-events-none z-20" />
-                    <h3 className="font-semibold text-sm mb-1 text-primary transition-colors leading-tight">
-                      {categories[currentCategoryIndex].name}
-                    </h3>
-                    <p className="text-xs text-muted-foreground">{categories[currentCategoryIndex].count} productos</p>
-                  </CardContent>
-                </Card>
+            {/* Contenedor del carrusel con overflow hidden */}
+            <div className="flex-1 max-w-xs overflow-hidden">
+              <div 
+                className="flex transition-transform duration-300 ease-in-out"
+                style={{ transform: `translateX(-${currentCategoryIndex * 100}%)` }}
+              >
+                {categories.map((category, index) => (
+                  <div key={index} className="min-w-full flex-shrink-0">
+                    <div className="group relative px-2">
+                      {/* Decorative border elements - same as hero */}
+                      <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-xl blur-lg transition-opacity duration-300 pointer-events-none z-0 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
+                      <div className={`absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg transition-opacity duration-300 pointer-events-none z-0 ${index === currentCategoryIndex ? 'opacity-100' : 'opacity-0'}`} />
+                      
+                      <Card className={`border-transparent transition-all duration-300 relative z-10 ${index === currentCategoryIndex ? 'border-primary/50' : ''}`}>
+                        <CardContent className="p-4 text-center relative">
+                          {/* Corner accent decorations */}
+                          <div className={`absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-accent rounded-tl-md transition-opacity duration-300 pointer-events-none z-20 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
+                          <div className={`absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md transition-opacity duration-300 pointer-events-none z-20 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
+                          <h3 className={`font-semibold text-sm mb-1 transition-colors leading-tight ${index === currentCategoryIndex ? 'text-primary' : 'text-foreground'}`}>
+                            {category.name}
+                          </h3>
+                          <p className="text-xs text-muted-foreground">{category.count} productos</p>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 

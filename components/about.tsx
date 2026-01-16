@@ -41,13 +41,10 @@ export function About() {
             <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-balance">
               Más de <span className="text-gradient-gold">27 años</span> de excelencia
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6 text-balance">
-              Más de 27 años de experiencia en medicina estética. Más de 150 mil pacientes atendidos y completamente satisfechos desde 1999.
-            </p>
-            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 text-balance">
-              Trabajamos con médicos altamente capacitados y especializados en Medicina Estética, que se mantienen 
-              en constante formación para brindar la mejor atención. Ofrecemos tratamientos con tecnología de vanguardia 
-              y productos certificados que garantizan seguridad y confianza.
+            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto text-balance px-2">
+              Más de 27 años de experiencia respaldados por más de 150 mil pacientes satisfechos. 
+              Médicos especializados en constante formación, tratamientos con tecnología de vanguardia 
+              y productos certificados que garantizan seguridad y resultados excepcionales.
             </p>
             <div className="grid grid-cols-2 gap-4 sm:gap-6 justify-center lg:justify-start">
               <div>
