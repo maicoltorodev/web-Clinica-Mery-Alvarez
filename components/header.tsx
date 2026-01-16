@@ -170,6 +170,7 @@ export function Header() {
             )}
           </button>
         </div>
+      </div>
       </header>
 
       {/* Mobile Menu Overlay - Fuera del header para evitar conflictos de z-index */}
