@@ -42,8 +42,8 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Cache estático para imágenes
-        source: '/(.*\\.(jpg|jpeg|png|gif|ico|svg|webp|avif))',
+        // Cache estático para imágenes jpg
+        source: '/:path*.jpg',
         headers: [
           {
             key: 'Cache-Control',
@@ -52,8 +52,108 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        // Cache para fuentes
-        source: '/(.*\\.(woff|woff2|ttf|otf))',
+        // Cache estático para imágenes jpeg
+        source: '/:path*.jpeg',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+      },
+      {
+        // Cache estático para imágenes png
+        source: '/:path*.png',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+      },
+      {
+        // Cache estático para imágenes gif
+        source: '/:path*.gif',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+      },
+      {
+        // Cache estático para imágenes ico
+        source: '/:path*.ico',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+      },
+      {
+        // Cache estático para imágenes svg
+        source: '/:path*.svg',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+      },
+      {
+        // Cache estático para imágenes webp
+        source: '/:path*.webp',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+      },
+      {
+        // Cache estático para imágenes avif
+        source: '/:path*.avif',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+      },
+      {
+        // Cache para fuentes woff
+        source: '/:path*.woff',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+      },
+      {
+        // Cache para fuentes woff2
+        source: '/:path*.woff2',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+      },
+      {
+        // Cache para fuentes ttf
+        source: '/:path*.ttf',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
+          }
+        ],
+      },
+      {
+        // Cache para fuentes otf
+        source: '/:path*.otf',
         headers: [
           {
             key: 'Cache-Control',
