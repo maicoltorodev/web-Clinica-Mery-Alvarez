@@ -95,25 +95,51 @@ export function SocialMedia() {
                 rel="noopener noreferrer"
                 className="block h-full"
               >
+                {/* Decorative borders - activos en viewport móvil y hover desktop */}
                 <DecorativeBorders isActive={isInCenter} blurIntensity="xl" />
                 
-                <div className="relative bg-card border border-border/50 hover:border-transparent rounded-2xl p-6 sm:p-8 transition-all duration-300 hover:shadow-2xl overflow-hidden z-10 h-full flex flex-col">
-                  {/* Background gradient overlay */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${network.gradient} transition-opacity duration-300 ${isInCenter ? 'opacity-5' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-5`} />
+                <div className="relative bg-card border border-border/50 rounded-2xl p-6 sm:p-8 transition-all duration-300 overflow-hidden z-10 h-full flex flex-col group/item">
+                  {/* Background gradient overlay - activo en viewport móvil y hover desktop */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${network.gradient} transition-opacity duration-300 ${
+                    isInCenter ? 'opacity-5' : 'opacity-0 lg:group-hover/item:opacity-5'
+                  }`} />
                   
+                  {/* Corner decorations - activas en viewport móvil y hover desktop */}
                   <CornerDecorations isActive={isInCenter} size="medium" position="inside" />
+                  
+                  {/* Borde de card - mismo efecto que bordes decorativos */}
+                  <div className={`absolute inset-0 rounded-2xl border-2 transition-all duration-300 pointer-events-none ${
+                    isInCenter 
+                      ? 'border-primary/30' 
+                      : 'border-transparent lg:group-hover/item:border-primary/30'
+                  }`} />
+                  
+                  {/* Sombra - activa en viewport móvil y hover desktop */}
+                  <div className={`absolute -inset-1 rounded-2xl bg-primary/5 blur-xl transition-opacity duration-300 pointer-events-none -z-10 ${
+                    isInCenter 
+                      ? 'opacity-100' 
+                      : 'opacity-0 lg:group-hover/item:opacity-100'
+                  }`} />
                   
                   {/* Icon */}
                   <div className="mb-4 sm:mb-6 relative z-10">
                     {Icon ? (
-                      <div className="inline-flex p-3 sm:p-4 rounded-xl bg-muted/50 group-hover:bg-muted transition-colors">
+                      <div className={`inline-flex p-3 sm:p-4 rounded-xl transition-colors duration-300 ${
+                        isInCenter 
+                          ? 'bg-muted' 
+                          : 'bg-muted/50 lg:group-hover/item:bg-muted'
+                      }`}>
                         <Icon 
                           className="h-8 w-8 sm:h-10 sm:w-10" 
                           style={{ color: typeof network.color === 'string' && network.color.startsWith('#') ? network.color : undefined }}
                         />
                       </div>
                     ) : (
-                      <div className="inline-flex p-3 sm:p-4 rounded-xl bg-muted/50 group-hover:bg-muted transition-colors">
+                      <div className={`inline-flex p-3 sm:p-4 rounded-xl transition-colors duration-300 ${
+                        isInCenter 
+                          ? 'bg-muted' 
+                          : 'bg-muted/50 lg:group-hover/item:bg-muted'
+                      }`}>
                         {network.name === "TikTok" ? (
                           <svg className="h-8 w-8 sm:h-10 sm:w-10" fill={network.color} viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
@@ -129,7 +155,12 @@ export function SocialMedia() {
                   
                   {/* Content */}
                   <div className="flex-1 relative z-10">
-                    <h3 className="text-xl sm:text-2xl font-bold mb-2 sm:mb-3 group-hover:text-primary transition-colors">
+                    {/* Título - mismo efecto en viewport móvil y hover desktop */}
+                    <h3 className={`text-xl sm:text-2xl font-bold mb-2 sm:mb-3 transition-colors duration-300 ${
+                      isInCenter 
+                        ? 'text-primary' 
+                        : 'lg:group-hover/item:text-primary'
+                    }`}>
                       {network.name}
                     </h3>
                     <p className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-4 leading-relaxed">
@@ -147,11 +178,19 @@ export function SocialMedia() {
                     </div>
                   </div>
                   
-                  {/* CTA */}
+                  {/* CTA - mismo efecto en viewport móvil y hover desktop */}
                   <div className="relative z-10 mt-auto">
-                    <div className="flex items-center gap-2 text-sm font-semibold text-primary group-hover:gap-3 transition-all">
+                    <div className={`flex items-center text-sm font-semibold text-primary transition-all duration-300 ${
+                      isInCenter 
+                        ? 'gap-3' 
+                        : 'gap-2 lg:group-hover/item:gap-3'
+                    }`}>
                       <span>Seguir ahora</span>
-                      <ExternalLink className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                      <ExternalLink className={`h-4 w-4 transition-transform duration-300 ${
+                        isInCenter 
+                          ? 'translate-x-1' 
+                          : 'lg:group-hover/item:translate-x-1'
+                      }`} />
                     </div>
                   </div>
                 </div>

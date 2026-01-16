@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo, useEffect, memo } from "react"
+import { useState, useMemo, useEffect, memo, useRef } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react"
@@ -10,6 +10,35 @@ import { SectionHeader } from "@/components/section-header"
 import { DecorativeBorders } from "@/components/decorative/decorative-borders"
 import { CornerDecorations } from "@/components/decorative/corner-decorations"
 import { OverlayGradient } from "@/components/decorative/overlay-gradient"
+
+// Componente para card de categoría
+interface CategoryCardProps {
+  category: { name: string; count: number }
+  isActive: boolean
+  onClick: () => void
+  isMobile?: boolean
+}
+
+function CategoryCard({ category, isActive, onClick, isMobile = false }: CategoryCardProps) {
+  return (
+    <div 
+      className={`group relative cursor-pointer ${isMobile ? 'px-2 py-2' : 'p-1'}`}
+      onClick={onClick}
+    >
+      <DecorativeBorders isActive={isActive} blurIntensity="lg" roundedSize="2xl" />
+      
+      <Card className={`border-border/50 hover:border-transparent transition-all duration-300 relative z-10 ${isActive ? 'border-primary/50' : ''} ${isMobile ? 'border-transparent' : ''}`}>
+        <CardContent className={`${isMobile ? 'p-5 py-6' : 'p-4 py-5 sm:p-5 sm:py-6'} text-center relative`}>
+          <CornerDecorations isActive={isActive} size="small" />
+          <h3 className={`font-semibold ${isMobile ? 'text-sm' : 'text-xs sm:text-sm'} mb-1 transition-colors leading-tight ${isActive ? 'text-primary' : isMobile ? 'text-foreground' : 'group-hover:text-primary'}`}>
+            {category.name}
+          </h3>
+          <p className="text-xs text-muted-foreground">{category.count} productos</p>
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
 
 // Componente separado para cada producto para mantener hooks estables
 const ProductCard = memo(function ProductCard({ product }: { product: typeof products[0] }) {
@@ -120,6 +149,7 @@ const products = [
 
 export function Products() {
   const [selectedCategory, setSelectedCategory] = useState("Todos")
+  const syncSourceRef = useRef<'index' | 'category' | 'click' | null>(null)
   
   // Calcular categorías dinámicamente desde los productos
   const categories = useMemo(() => {
@@ -143,27 +173,42 @@ export function Products() {
       : products.filter(product => product.category === selectedCategory)
   }, [selectedCategory])
 
-  // Usar hook de carrusel para navegación móvil
+  // Usar hook de carrusel para navegación móvil (índice 0 = "Todos")
   const { currentIndex: currentCategoryIndex, goToPrevious, goToNext, goToIndex, setCurrentIndex } = useCarousel(categories.length, 0)
 
-  // Sincronizar categoría seleccionada con el índice del carrusel (solo cuando cambia el índice)
+  // Sincronizar categoría seleccionada cuando cambia el índice del carrusel (navegación con botones o swipe)
   useEffect(() => {
+    // Si el cambio viene de un click o de la categoría, no hacer nada aquí
+    if (syncSourceRef.current === 'click' || syncSourceRef.current === 'category') {
+      syncSourceRef.current = null
+      return
+    }
+    
     const categoryName = categories[currentCategoryIndex]?.name
     if (categoryName && categoryName !== selectedCategory) {
+      syncSourceRef.current = 'index'
       setSelectedCategory(categoryName)
     }
   }, [currentCategoryIndex, categories, selectedCategory])
 
-  // Sincronizar índice del carrusel cuando cambia la categoría (desktop clicks)
+  // Sincronizar índice del carrusel cuando cambia la categoría (solo para desktop clicks directos)
   useEffect(() => {
+    // Si el cambio viene de un click o del índice, no hacer nada aquí
+    if (syncSourceRef.current === 'click' || syncSourceRef.current === 'index') {
+      syncSourceRef.current = null
+      return
+    }
+    
     const categoryIndex = categories.findIndex(cat => cat.name === selectedCategory)
     if (categoryIndex !== -1 && categoryIndex !== currentCategoryIndex) {
+      syncSourceRef.current = 'category'
       setCurrentIndex(categoryIndex)
     }
   }, [selectedCategory, categories, currentCategoryIndex, setCurrentIndex])
 
-  // Manejar clic en categoría (desktop)
+  // Manejar clic en categoría - marca la fuente como 'click' para evitar sincronización duplicada
   const handleCategoryClick = (categoryName: string, index: number) => {
+    syncSourceRef.current = 'click'
     setSelectedCategory(categoryName)
     goToIndex(index)
   }
@@ -201,19 +246,12 @@ export function Products() {
               >
                 {categories.map((category, index) => (
                   <div key={index} className="min-w-full flex-shrink-0">
-                    <div className="group relative px-2 py-2">
-                      <DecorativeBorders isActive={index === currentCategoryIndex} blurIntensity="lg" roundedSize="2xl" />
-                      
-                      <Card className={`border-transparent transition-all duration-300 relative z-10 ${index === currentCategoryIndex ? 'border-primary/50' : ''}`}>
-                        <CardContent className="p-5 py-6 text-center relative">
-                          <CornerDecorations isActive={index === currentCategoryIndex} size="small" />
-                          <h3 className={`font-semibold text-sm mb-1 transition-colors leading-tight ${index === currentCategoryIndex ? 'text-primary' : 'text-foreground'}`}>
-                            {category.name}
-                          </h3>
-                          <p className="text-xs text-muted-foreground">{category.count} productos</p>
-                        </CardContent>
-                      </Card>
-                    </div>
+                    <CategoryCard
+                      category={category}
+                      isActive={index === currentCategoryIndex}
+                      onClick={() => handleCategoryClick(category.name, index)}
+                      isMobile={true}
+                    />
                   </div>
                 ))}
               </div>
@@ -232,28 +270,14 @@ export function Products() {
 
         {/* Desktop: Grid de categorías */}
         <div className="hidden lg:grid lg:grid-cols-7 gap-3 sm:gap-4 mb-10 sm:mb-12">
-          {categories.map((category, index) => {
-            const isActive = selectedCategory === category.name
-            return (
-              <div 
-                key={index} 
-                className="group relative cursor-pointer p-1"
-                onClick={() => handleCategoryClick(category.name, index)}
-              >
-                <DecorativeBorders isActive={isActive} blurIntensity="lg" roundedSize="2xl" />
-                
-                <Card className={`border-border/50 hover:border-transparent transition-all duration-300 relative z-10 ${isActive ? 'border-primary/50' : ''}`}>
-                  <CardContent className="p-4 py-5 sm:p-5 sm:py-6 text-center relative">
-                    <CornerDecorations isActive={isActive} size="small" />
-                    <h3 className={`font-semibold text-xs sm:text-sm mb-1 transition-colors leading-tight ${isActive ? 'text-primary' : 'group-hover:text-primary'}`}>
-                      {category.name}
-                    </h3>
-                    <p className="text-xs text-muted-foreground">{category.count} productos</p>
-                  </CardContent>
-                </Card>
-              </div>
-            )
-          })}
+          {categories.map((category, index) => (
+            <CategoryCard
+              key={index}
+              category={category}
+              isActive={selectedCategory === category.name}
+              onClick={() => handleCategoryClick(category.name, index)}
+            />
+          ))}
         </div>
 
         {/* Featured Products */}

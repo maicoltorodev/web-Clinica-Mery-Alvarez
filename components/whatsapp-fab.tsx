@@ -6,33 +6,45 @@ import { useMobileMenu } from "@/lib/mobile-menu-context"
 
 export function WhatsAppFAB() {
   const { isMobileMenuOpen } = useMobileMenu()
+  const [showFAB, setShowFAB] = useState(false)
   const [showMessage, setShowMessage] = useState(false)
   const [hasShown, setHasShown] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      const productosSection = document.getElementById("productos")
-      if (productosSection && !hasShown) {
-        const rect = productosSection.getBoundingClientRect()
-        // Mostrar cuando la sección de productos esté visible
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-          setShowMessage(true)
-          setHasShown(true)
-          // Ocultar después de 5 segundos
-          setTimeout(() => {
-            setShowMessage(false)
-          }, 5000)
+      const inicioSection = document.getElementById("inicio")
+      
+      if (inicioSection) {
+        const rect = inicioSection.getBoundingClientRect()
+        // Mostrar FAB cuando se haya bajado de la sección de inicio
+        const isBelowInicio = rect.bottom < window.innerHeight * 0.2
+        setShowFAB(isBelowInicio)
+        
+        // Mostrar mensaje cuando se llegue a productos (solo una vez)
+        if (!hasShown) {
+          const productosSection = document.getElementById("productos")
+          if (productosSection) {
+            const productosRect = productosSection.getBoundingClientRect()
+            if (productosRect.top < window.innerHeight && productosRect.bottom > 0) {
+              setShowMessage(true)
+              setHasShown(true)
+              // Ocultar después de 5 segundos
+              setTimeout(() => {
+                setShowMessage(false)
+              }, 5000)
+            }
+          }
         }
       }
     }
 
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     handleScroll() // Verificar en carga inicial
     return () => window.removeEventListener("scroll", handleScroll)
   }, [hasShown])
 
-  // Ocultar el FAB cuando el menú móvil está abierto
-  if (isMobileMenuOpen) {
+  // Ocultar el FAB cuando el menú móvil está abierto o cuando no debe mostrarse
+  if (isMobileMenuOpen || !showFAB) {
     return null
   }
 
