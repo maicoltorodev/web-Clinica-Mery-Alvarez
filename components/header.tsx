@@ -68,11 +68,11 @@ export function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 lg:h-24">
           {/* Logo */}
-          <a href="#inicio" className="flex items-center flex-shrink-0">
+          <a href="#inicio" className="flex items-center flex-shrink-0 group">
             <img
               src="/flower.gif"
               alt="Clínica Mery Álvarez"
-              className="h-10 sm:h-12 w-auto lg:h-16 object-contain"
+              className="h-10 sm:h-12 w-auto lg:h-16 object-contain transition-transform duration-300 group-hover:scale-110"
             />
           </a>
 

@@ -39,8 +39,8 @@ export function Hero() {
             <div className="flex justify-center lg:hidden mb-6 sm:mb-8">
               <div className="relative group inline-block">
                 {/* Enhanced decorative border elements - more prominent for importance */}
-                <div className="absolute -inset-6 bg-gradient-to-br from-primary/30 via-accent/30 to-primary/30 rounded-3xl blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none z-0" />
-                <div className="absolute -inset-4 bg-gradient-to-br from-primary/25 via-accent/25 to-primary/25 rounded-2xl blur-xl opacity-80 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
+                <div className="absolute -inset-6 bg-gradient-to-br from-primary/30 via-accent/30 to-primary/30 rounded-3xl opacity-70 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none z-0" />
+                <div className="absolute -inset-4 bg-gradient-to-br from-primary/25 via-accent/25 to-primary/25 rounded-2xl opacity-80 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
                 <div className="absolute -inset-2 bg-gradient-to-br from-primary/40 to-accent/40 rounded-xl transition-all duration-300 pointer-events-none z-0 opacity-100 group-hover:from-primary/50 group-hover:to-accent/50" />
                 
                 {/* Professional image container with enhanced border and shadow */}
@@ -48,7 +48,7 @@ export function Hero() {
                   <img
                     src="/mery.png"
                     alt="Clínica Mery Álvarez"
-                    className="w-[260px] sm:w-[320px] h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02]"
+                    className="w-[200px] sm:w-[260px] h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02]"
                     style={{
                       filter: 'contrast(1.05) saturate(1.08) brightness(1.03)',
                       imageRendering: 'crisp-edges',
@@ -114,7 +114,7 @@ export function Hero() {
                 <img
                   src="/mery.png"
                   alt="Clínica Mery Álvarez"
-                  className="w-[380px] h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02]"
+                  className="w-[420px] h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02]"
                   style={{
                     filter: 'contrast(1.05) saturate(1.08) brightness(1.03)',
                     imageRendering: 'crisp-edges',

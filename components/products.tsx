@@ -13,21 +13,21 @@ function ProductCard({ product, formatPrice }: { product: typeof products[0], fo
   return (
     <div key={product.id} ref={elementRef} className="group relative">
       {/* Decorative border elements - same as hero */}
-      <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
-      <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`} />
+      <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
+      <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-100`} />
       
       <Card className="border-border/50 hover:border-transparent transition-all duration-300 hover:shadow-xl overflow-hidden relative z-10">
         <div className="relative aspect-square bg-white p-3 sm:p-4 flex items-center justify-center overflow-hidden">
           {/* Subtle overlay gradient - activa en mobile y desktop */}
-          <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 transition-opacity duration-300 pointer-events-none z-10 ${isInCenter ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`} />
+          <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 transition-opacity duration-300 pointer-events-none z-10 ${isInCenter ? 'opacity-100' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-100`} />
           
           {/* Corner accent decorations */}
-          <div className={`absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
-          <div className={`absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
+          <div className={`absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
+          <div className={`absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
           <img
             src={product.image}
             alt={product.name}
-            className={`w-3/4 h-3/4 object-contain transition-transform duration-300 ${isInCenter ? 'scale-110 lg:scale-100 lg:group-hover:scale-110' : 'lg:group-hover:scale-110'}`}
+            className={`w-3/4 h-3/4 object-contain transition-transform duration-300 ${isInCenter ? 'scale-110' : ''} lg:scale-100 lg:group-hover:scale-110`}
           />
           <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
             <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border border-primary/20 backdrop-blur-sm">
@@ -42,7 +42,7 @@ function ProductCard({ product, formatPrice }: { product: typeof products[0], fo
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0 px-4 pb-4">
-          <Button className={`w-full gap-2 transition-colors h-10 sm:h-11 text-sm sm:text-base ${isInCenter ? '!bg-accent !text-background lg:!bg-gradient-to-r lg:!from-primary lg:!to-accent lg:!text-background lg:group-hover:!bg-accent lg:group-hover:!text-background' : 'lg:group-hover:!bg-accent lg:group-hover:!text-background'}`}>
+          <Button className={`w-full gap-2 transition-colors h-10 sm:h-11 text-sm sm:text-base ${isInCenter ? '!bg-accent !text-background' : ''} lg:!bg-gradient-to-r lg:!from-primary lg:!to-accent lg:!text-background lg:group-hover:!bg-accent lg:group-hover:!text-background`}>
             <ShoppingCart className="h-4 w-4" />
             Añadir al carrito
           </Button>
@@ -212,8 +212,8 @@ export function Products() {
                   <div key={index} className="min-w-full flex-shrink-0">
                     <div className="group relative px-2 py-2">
                       {/* Decorative border elements - same as hero */}
-                      <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-xl blur-lg transition-opacity duration-300 pointer-events-none z-0 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
-                      <div className={`absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg transition-opacity duration-300 pointer-events-none z-0 ${index === currentCategoryIndex ? 'opacity-100' : 'opacity-0'}`} />
+                      <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-lg transition-opacity duration-300 pointer-events-none z-0 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
+                      <div className={`absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${index === currentCategoryIndex ? 'opacity-100' : 'opacity-0'}`} />
                       
                       <Card className={`border-transparent transition-all duration-300 relative z-10 ${index === currentCategoryIndex ? 'border-primary/50' : ''}`}>
                         <CardContent className="p-5 py-6 text-center relative">
@@ -254,8 +254,8 @@ export function Products() {
                 onClick={() => handleCategoryClick(category.name, index)}
               >
                 {/* Decorative border elements - same as hero */}
-                <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-xl blur-lg transition-opacity duration-300 pointer-events-none z-0 ${isActive ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'}`} />
-                <div className={`absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg transition-opacity duration-300 pointer-events-none z-0 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-lg transition-opacity duration-300 pointer-events-none z-0 ${isActive ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'}`} />
+                <div className={`absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
                 
                 <Card className={`border-border/50 hover:border-transparent transition-all duration-300 relative z-10 ${isActive ? 'border-primary/50' : ''}`}>
                   <CardContent className="p-4 py-5 sm:p-5 sm:py-6 text-center relative">
