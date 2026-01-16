@@ -39,7 +39,7 @@ function ProductCard({ product, formatPrice }: { product: typeof products[0], fo
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0 px-4 pb-4">
-          <Button className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors h-10 sm:h-11 text-sm sm:text-base">
+          <Button className="w-full gap-2 group-hover:bg-accent group-hover:text-background transition-colors h-10 sm:h-11 text-sm sm:text-base">
             <ShoppingCart className="h-4 w-4" />
             Añadir al carrito
           </Button>
