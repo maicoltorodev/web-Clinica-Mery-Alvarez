@@ -5,6 +5,15 @@ import { useInViewportCenter } from "@/lib/hooks"
 
 const socialNetworks = [
   {
+    name: "Spotify",
+    icon: null,
+    color: "#1DB954",
+    url: "https://open.spotify.com/show/clinicameryalvarez",
+    description: "Escucha nuestros podcasts sobre salud y bienestar",
+    content: "Podcasts • Entrevistas • Consejos",
+    gradient: "from-green-400 to-green-600"
+  },
+  {
     name: "Facebook",
     icon: Facebook,
     color: "#1877F2",
@@ -48,15 +57,6 @@ const socialNetworks = [
     description: "Contenido divertido y educativo sobre medicina estética",
     content: "Tendencias • Tips rápidos • Transformaciones",
     gradient: "from-gray-900 to-black"
-  },
-  {
-    name: "Spotify",
-    icon: null,
-    color: "#1DB954",
-    url: "https://open.spotify.com/show/clinicameryalvarez",
-    description: "Escucha nuestros podcasts sobre salud y bienestar",
-    content: "Podcasts • Entrevistas • Consejos",
-    gradient: "from-green-400 to-green-600"
   }
 ]
 

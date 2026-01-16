@@ -96,6 +96,9 @@ export function Testimonials() {
               
               <Card className="border-border/50 transition-all duration-300 relative z-10 min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]">
                 <CardContent className="p-8 sm:p-12 lg:p-16 relative h-full flex flex-col">
+                  {/* Subtle overlay gradient - siempre visible pero más intenso en mobile */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none z-10 opacity-50 lg:opacity-30" />
+                  
                   {/* Corner accent decorations */}
                   <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-accent rounded-tl-lg opacity-60 pointer-events-none z-20" />
                   <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-accent rounded-br-lg opacity-60 pointer-events-none z-20" />

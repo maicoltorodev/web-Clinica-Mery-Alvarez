@@ -57,10 +57,12 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-border"
-          : "bg-white/95 backdrop-blur-md border-b border-border/50"
+      className={`fixed top-0 left-0 right-0 transition-all duration-300 ${
+        isMobileMenuOpen 
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-border z-40"
+          : isScrolled
+          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-border z-50"
+          : "bg-white/95 backdrop-blur-md border-b border-border/50 z-50"
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -75,18 +77,20 @@ export function Header() {
           </a>
 
           {/* Mobile CTA Button - Centered */}
-          <div className="flex-1 flex justify-center lg:hidden px-4">
-            <Button 
-              size="sm" 
-              className="gap-2 h-9 text-xs sm:text-sm px-2 sm:px-4"
-              onClick={() => {
-                document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })
-              }}
-            >
-              <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              <span>Agendar Cita</span>
-            </Button>
-          </div>
+          {!isMobileMenuOpen && (
+            <div className="flex-1 flex justify-center lg:hidden px-4">
+              <Button 
+                size="sm" 
+                className="gap-2 h-9 text-xs sm:text-sm px-2 sm:px-4"
+                onClick={() => {
+                  document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })
+                }}
+              >
+                <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                <span>Agendar Cita</span>
+              </Button>
+            </div>
+          )}
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
@@ -140,7 +144,7 @@ export function Header() {
             />
             
             {/* Menu Panel */}
-            <div className="lg:hidden fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-out animate-in slide-in-from-right">
+            <div className="lg:hidden fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-[60] transform transition-transform duration-300 ease-out animate-in slide-in-from-right">
               {/* Header del menú */}
               <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border bg-gradient-to-r from-primary/5 to-accent/5">
                 <img

@@ -76,8 +76,8 @@ export function Team() {
                         alt={member.name}
                         className="w-full h-full object-cover relative z-10"
                       />
-                      {/* Subtle overlay gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+                      {/* Subtle overlay gradient - activa en mobile y desktop */}
+                      <div className={`absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 transition-opacity duration-300 pointer-events-none z-10 ${isInCenter ? 'opacity-100 lg:opacity-50 lg:group-hover:opacity-100' : 'opacity-50 lg:group-hover:opacity-100'}`} />
                       
                       {/* Logo badge */}
                       <div className="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 bg-background/95 backdrop-blur-sm p-1.5 sm:p-2 rounded-lg shadow-lg border border-border/50">

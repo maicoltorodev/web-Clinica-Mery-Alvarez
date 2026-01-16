@@ -50,7 +50,9 @@ export function Hero() {
                   <div className="relative overflow-hidden rounded-md aspect-[3/4]">
                     {/* Skeleton */}
                     {!mobileImageLoaded && (
-                      <div className="absolute inset-0 bg-gradient-to-br from-muted to-muted/50 animate-pulse rounded-md z-0" />
+                      <div className="absolute inset-0 flex items-center justify-center z-0">
+                        <div className="w-3/4 h-3/4 bg-gradient-to-br from-muted to-muted/50 animate-pulse rounded-md" />
+                      </div>
                     )}
                     
                     <img
@@ -125,7 +127,9 @@ export function Hero() {
                 <div className="relative overflow-hidden rounded-lg aspect-[3/4]">
                   {/* Skeleton */}
                   {!desktopImageLoaded && (
-                    <div className="absolute inset-0 bg-gradient-to-br from-muted to-muted/50 animate-pulse rounded-lg z-0" />
+                    <div className="absolute inset-0 flex items-center justify-center z-0">
+                      <div className="w-3/4 h-3/4 bg-gradient-to-br from-muted to-muted/50 animate-pulse rounded-lg" />
+                    </div>
                   )}
                   
                   <img
