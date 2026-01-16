@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { useState, useMemo, useEffect, memo, useRef } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -89,10 +90,14 @@ const ProductCard = memo(function ProductCard({ product }: { product: typeof pro
         <div className="relative aspect-square bg-white p-3 sm:p-4 flex items-center justify-center overflow-hidden">
           <OverlayGradient isActive={isInCenter} />
           <CornerDecorations isActive={isInCenter} size="medium" position="inside" />
-          <img
+          <Image
             src={product.image}
             alt={product.name}
+            width={400}
+            height={400}
             className={`w-3/4 h-3/4 object-contain transition-transform duration-300 ${isInCenter ? 'scale-110' : ''} lg:scale-100 lg:group-hover:scale-110`}
+            loading="lazy"
+            quality={80}
           />
           <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
             <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border border-primary/20 backdrop-blur-sm">
@@ -251,7 +256,7 @@ export function Products() {
   }
 
   return (
-    <section id="productos" className="py-16 sm:py-20 lg:py-32 bg-background">
+    <section id="productos" className="py-16 sm:py-20 lg:py-32 bg-background" style={{ contain: 'layout style paint' }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <SectionHeader
@@ -279,27 +284,27 @@ export function Products() {
           
           {/* Contenedor principal del carrusel mejorado */}
           <div className="relative bg-gradient-to-br from-muted/40 via-muted/20 to-muted/40 rounded-3xl p-5 sm:p-6 border-2 border-border/60 shadow-xl backdrop-blur-sm">
-            {/* Patrón decorativo de fondo */}
-            <div className="absolute inset-0 opacity-5 overflow-hidden rounded-3xl">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent rounded-full blur-2xl" />
+            {/* Patrón decorativo de fondo - optimizado: menos blur en desktop */}
+            <div className="absolute inset-0 opacity-5 overflow-hidden rounded-3xl pointer-events-none">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary rounded-full blur-2xl lg:blur-xl" style={{ willChange: 'opacity', transform: 'translateZ(0)' }} />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent rounded-full blur-xl lg:blur-lg" style={{ willChange: 'opacity', transform: 'translateZ(0)' }} />
             </div>
             
             <div className="relative flex items-center justify-center gap-3 sm:gap-4">
               {/* Botón anterior mejorado */}
               <button
                 onClick={goToPrevious}
-                className="p-3 sm:p-3.5 rounded-full bg-background border-2 border-primary/30 hover:border-primary hover:bg-gradient-to-br hover:from-primary/10 hover:to-accent/10 transition-all duration-300 flex-shrink-0 z-10 shadow-lg hover:shadow-xl group"
+                className="p-3 sm:p-3.5 rounded-full bg-background border-2 border-primary/30 hover:border-primary hover:bg-gradient-to-br hover:from-primary/10 hover:to-accent/10 transition-[border-color,background,box-shadow] duration-300 flex-shrink-0 z-10 shadow-lg hover:shadow-xl group"
                 aria-label="Categoría anterior"
               >
-                <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 text-foreground group-hover:text-primary transition-colors" />
+                <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 text-foreground group-hover:text-primary transition-colors duration-300" />
               </button>
 
               {/* Contenedor del carrusel con overflow hidden */}
               <div className="flex-1 max-w-xs overflow-hidden">
                 <div 
-                  className="flex transition-transform duration-300 ease-in-out"
-                  style={{ transform: `translateX(-${currentCategoryIndex * 100}%)` }}
+                  className="flex transition-transform duration-500 ease-out will-change-transform"
+                  style={{ transform: `translate3d(-${currentCategoryIndex * 100}%, 0, 0)` }}
                 >
                   {categories.map((category, index) => (
                     <div key={index} className="min-w-full flex-shrink-0">
@@ -317,10 +322,10 @@ export function Products() {
               {/* Botón siguiente mejorado */}
               <button
                 onClick={goToNext}
-                className="p-3 sm:p-3.5 rounded-full bg-background border-2 border-primary/30 hover:border-primary hover:bg-gradient-to-br hover:from-primary/10 hover:to-accent/10 transition-all duration-300 flex-shrink-0 z-10 shadow-lg hover:shadow-xl group"
+                className="p-3 sm:p-3.5 rounded-full bg-background border-2 border-primary/30 hover:border-primary hover:bg-gradient-to-br hover:from-primary/10 hover:to-accent/10 transition-[border-color,background,box-shadow] duration-300 flex-shrink-0 z-10 shadow-lg hover:shadow-xl group"
                 aria-label="Categoría siguiente"
               >
-                <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 text-foreground group-hover:text-primary transition-colors" />
+                <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 text-foreground group-hover:text-primary transition-colors duration-300" />
               </button>
             </div>
             
@@ -330,7 +335,7 @@ export function Products() {
                 <button
                   key={index}
                   onClick={() => handleCategoryClick(categories[index].name, index)}
-                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                  className={`h-2.5 rounded-full transition-[width,background-color] duration-300 ease-out ${
                     index === currentCategoryIndex
                       ? 'w-10 bg-gradient-to-r from-primary via-accent to-primary shadow-md'
                       : 'w-2.5 bg-border/60 hover:bg-primary/60 hover:w-3'
@@ -358,10 +363,10 @@ export function Products() {
           
           {/* Grid de categorías con contenedor mejorado */}
           <div className="relative bg-gradient-to-br from-muted/30 via-muted/10 to-muted/30 rounded-2xl p-4 border border-border/50 shadow-lg backdrop-blur-sm">
-            {/* Patrón decorativo sutil */}
-            <div className="absolute inset-0 opacity-3 overflow-hidden rounded-2xl">
-              <div className="absolute top-0 right-0 w-40 h-40 bg-primary rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent rounded-full blur-2xl" />
+            {/* Patrón decorativo sutil - optimizado: menos blur en desktop */}
+            <div className="absolute inset-0 opacity-3 overflow-hidden rounded-2xl pointer-events-none">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-primary rounded-full blur-2xl lg:blur-xl" style={{ willChange: 'opacity', transform: 'translateZ(0)' }} />
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent rounded-full blur-xl lg:blur-lg" style={{ willChange: 'opacity', transform: 'translateZ(0)' }} />
             </div>
             
             <div className="relative grid lg:grid-cols-7 gap-3">

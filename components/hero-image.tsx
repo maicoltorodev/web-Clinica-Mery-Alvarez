@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { PROFESSIONAL_IMAGE_FILTER, MERY_IMAGE_SIZES } from "@/lib/constants"
 
 interface HeroImageProps {
@@ -35,11 +36,15 @@ export function HeroImage({ variant = 'mobile', className = '' }: HeroImageProps
           
           {/* Main image container */}
           <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-background to-muted/30">
-            <img
+            <Image
               src="/mery.png"
               alt="Clínica Mery Álvarez"
+              width={variant === 'desktop' ? 420 : 260}
+              height={variant === 'desktop' ? 560 : 347}
               className={`${sizeClass} h-auto object-cover relative transition-all duration-500`}
               style={PROFESSIONAL_IMAGE_FILTER}
+              priority={variant === 'desktop'}
+              quality={85}
             />
             {/* Professional overlay for depth */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

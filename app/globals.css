@@ -94,6 +94,17 @@
   html {
     scroll-behavior: smooth;
   }
+  /* Optimizaciones de rendimiento para escritorio */
+  @media (min-width: 1024px) {
+    /* Aceleración de hardware para elementos con transform */
+    [class*="transition"],
+    [class*="hover:scale"],
+    [class*="group-hover"] {
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+  }
 }
 
 @layer utilities {
@@ -115,5 +126,13 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+  /* Utilidades de optimización de rendimiento */
+  .gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+  }
+  .smooth-transition {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
 }

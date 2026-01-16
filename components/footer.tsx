@@ -1,21 +1,26 @@
 "use client"
 
+import Image from "next/image"
 import { Phone, Mail, MapPin, Clock, Home, Users, Sparkles, UserCheck, MessageSquare, Calendar, ArrowRight, Smile, Users2, Flower, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { scrollToSection } from "@/lib/utils"
 
 export function Footer() {
   return (
-    <footer id="contacto" className="bg-foreground text-background">
+    <footer id="contacto" className="bg-foreground text-background" style={{ contain: 'layout style paint' }}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-24">
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-12" style={{ contain: 'layout' }}>
           {/* Brand */}
           <div className="sm:col-span-2 lg:col-span-1">
             <div className="mb-4">
-              <img
+              <Image
                 src="/logo.png"
                 alt="Clínica Mery Álvarez"
+                width={120}
+                height={48}
                 className="h-10 sm:h-12 w-auto object-contain brightness-0 invert"
+                loading="lazy"
+                quality={90}
               />
             </div>
             <p className="text-sm sm:text-base text-background/70 mb-4 sm:mb-6 leading-relaxed">

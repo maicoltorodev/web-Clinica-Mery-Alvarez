@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { MessageCircle, X } from "lucide-react"
 import { useMobileMenu } from "@/lib/mobile-menu-context"
 
@@ -8,10 +8,17 @@ export function WhatsAppFAB() {
   const { isMobileMenuOpen } = useMobileMenu()
   const [showFAB, setShowFAB] = useState(false)
   const [showMessage, setShowMessage] = useState(false)
-  const [hasShown, setHasShown] = useState(false)
+  const hasShownRef = useRef(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const isMountedRef = useRef(true)
 
   useEffect(() => {
+    isMountedRef.current = true
+    
     const handleScroll = () => {
+      // Verificar si el componente está montado antes de actualizar estado
+      if (!isMountedRef.current) return
+      
       const inicioSection = document.getElementById("inicio")
       
       if (inicioSection) {
@@ -21,16 +28,23 @@ export function WhatsAppFAB() {
         setShowFAB(isBelowInicio)
         
         // Mostrar mensaje cuando se llegue a productos (solo una vez)
-        if (!hasShown) {
+        if (!hasShownRef.current) {
           const productosSection = document.getElementById("productos")
           if (productosSection) {
             const productosRect = productosSection.getBoundingClientRect()
             if (productosRect.top < window.innerHeight && productosRect.bottom > 0) {
+              hasShownRef.current = true
               setShowMessage(true)
-              setHasShown(true)
+              // Limpiar timeout anterior si existe
+              if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current)
+              }
               // Ocultar después de 5 segundos
-              setTimeout(() => {
-                setShowMessage(false)
+              timeoutRef.current = setTimeout(() => {
+                if (isMountedRef.current) {
+                  setShowMessage(false)
+                }
+                timeoutRef.current = null
               }, 5000)
             }
           }
@@ -40,8 +54,17 @@ export function WhatsAppFAB() {
 
     window.addEventListener("scroll", handleScroll, { passive: true })
     handleScroll() // Verificar en carga inicial
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [hasShown])
+    
+    return () => {
+      isMountedRef.current = false
+      window.removeEventListener("scroll", handleScroll)
+      // Limpiar timeout si existe
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+        timeoutRef.current = null
+      }
+    }
+  }, [])
 
   // Ocultar el FAB cuando el menú móvil está abierto o cuando no debe mostrarse
   if (isMobileMenuOpen || !showFAB) {

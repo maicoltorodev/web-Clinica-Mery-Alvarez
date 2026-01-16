@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import Image from "next/image"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Calendar, ShoppingBag, Users, Sparkles, UserCheck, MessageSquare, Phone } from "lucide-react"
 import { useMobileMenu } from "@/lib/mobile-menu-context"
@@ -9,25 +10,47 @@ import { scrollToSection } from "@/lib/utils"
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { isMobileMenuOpen, setIsMobileMenuOpen } = useMobileMenu()
+  const animationFrameRef = useRef<number | null>(null)
+  const isMountedRef = useRef(true)
 
   useEffect(() => {
+    isMountedRef.current = true
     let ticking = false
+    
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          setIsScrolled(window.scrollY > 20)
+      if (!ticking && isMountedRef.current) {
+        // Cancelar frame anterior si existe
+        if (animationFrameRef.current !== null) {
+          cancelAnimationFrame(animationFrameRef.current)
+        }
+        
+        animationFrameRef.current = window.requestAnimationFrame(() => {
+          if (isMountedRef.current) {
+            setIsScrolled(window.scrollY > 20)
+          }
           ticking = false
+          animationFrameRef.current = null
         })
         ticking = true
       }
     }
+    
     window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
+    
+    return () => {
+      isMountedRef.current = false
+      window.removeEventListener("scroll", handleScroll)
+      // Cancelar animation frame si existe
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current)
+        animationFrameRef.current = null
+      }
+    }
   }, [])
 
   useEffect(() => {
     if (isMobileMenuOpen) {
-      // Guardar el scroll actual
+      // Guardar el scroll actual antes de bloquear
       const scrollY = window.scrollY
       // Bloquear el scroll del body
       document.body.style.position = 'fixed'
@@ -37,15 +60,20 @@ export function Header() {
       
       return () => {
         // Restaurar el scroll del body al cerrar o desmontar
-        const savedScrollY = document.body.style.top
+        const savedScrollY = scrollY // Usar la variable guardada en lugar de leer del DOM
         document.body.style.position = ''
         document.body.style.top = ''
         document.body.style.width = ''
         document.body.style.overflow = ''
-        if (savedScrollY) {
-          window.scrollTo(0, parseInt(savedScrollY || '0') * -1)
-        }
+        // Restaurar la posición de scroll
+        window.scrollTo(0, savedScrollY)
       }
+    } else {
+      // Asegurar que el body no esté bloqueado cuando el menú está cerrado
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      document.body.style.overflow = ''
     }
   }, [isMobileMenuOpen])
   
@@ -63,24 +91,30 @@ export function Header() {
   ]
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 transition-all duration-300 ${
-        isMobileMenuOpen 
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-border z-40"
-          : isScrolled
-          ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-border z-50"
-          : "bg-white/95 backdrop-blur-md border-b border-border/50 z-50"
-      }`}
-    >
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 transition-colors duration-300 ${
+          isMobileMenuOpen 
+            ? "bg-white/95 lg:backdrop-blur-md shadow-sm border-b border-border z-50"
+            : isScrolled
+            ? "bg-white/95 lg:backdrop-blur-md shadow-sm border-b border-border z-50"
+            : "bg-white/95 lg:backdrop-blur-md border-b border-border/50 z-50"
+        }`}
+      >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 lg:h-24">
           {/* Logo */}
           <a href="#inicio" className="flex items-center flex-shrink-0 group">
-            <img
-              src="/flower.gif"
-              alt="Clínica Mery Álvarez"
-              className="h-10 sm:h-12 w-auto lg:h-16 object-contain transition-transform duration-300 group-hover:scale-110"
-            />
+        <Image
+          src="/flower.gif"
+          alt="Clínica Mery Álvarez"
+          width={64}
+          height={64}
+          className="h-10 sm:h-12 w-auto lg:h-16 object-contain transition-transform duration-300 group-hover:scale-110"
+          priority
+          quality={85}
+          unoptimized
+        />
           </a>
 
           {/* Mobile CTA Button - Centered */}
@@ -136,24 +170,29 @@ export function Header() {
             )}
           </button>
         </div>
+      </header>
 
-        {/* Mobile Menu Overlay */}
-        {isMobileMenuOpen && (
-          <>
-            {/* Backdrop */}
-            <div 
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-            
-            {/* Menu Panel */}
-            <div className="lg:hidden fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-[60] transform transition-transform duration-300 ease-out animate-in slide-in-from-right">
+      {/* Mobile Menu Overlay - Fuera del header para evitar conflictos de z-index */}
+      {isMobileMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <div 
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[45] lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          
+          {/* Menu Panel */}
+          <div className="lg:hidden fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-[55] transform transition-transform duration-300 ease-out">
               {/* Header del menú */}
               <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border bg-gradient-to-r from-primary/5 to-accent/5">
-                <img
+                <Image
                   src="/titulo.png"
                   alt="Clínica Mery Álvarez"
+                  width={200}
+                  height={60}
                   className="h-8 sm:h-10 w-auto object-contain"
+                  loading="lazy"
+                  quality={90}
                 />
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -165,7 +204,7 @@ export function Header() {
               </div>
 
               {/* Navigation Items */}
-              <nav className="flex flex-col p-4 sm:p-6 overflow-y-auto">
+              <nav className="flex flex-col p-4 sm:p-6 pb-6 overflow-y-auto">
                 {navItems.map((item, index) => {
                   const Icon = item.icon
                   return (
@@ -174,7 +213,6 @@ export function Header() {
                       href={item.href}
                       className="group flex items-center gap-4 px-4 py-4 rounded-xl hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all duration-200 mb-2"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      style={{ animationDelay: `${index * 50}ms` }}
                     >
                       <div className="flex-shrink-0 p-2.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                         <Icon className="h-5 w-5 text-primary" />
@@ -187,24 +225,9 @@ export function Header() {
                   )
                 })}
               </nav>
-
-              {/* Footer del menú */}
-              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 border-t border-border bg-muted/30">
-                <Button 
-                  className="w-full gap-2 h-12 text-base font-semibold"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false)
-                    handleScrollToContact()
-                  }}
-                >
-                  <Calendar className="h-5 w-5" />
-                  <span>Agendar Cita</span>
-                </Button>
-              </div>
             </div>
           </>
         )}
-      </div>
-    </header>
+    </>
   )
 }

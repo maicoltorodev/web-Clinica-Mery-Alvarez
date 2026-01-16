@@ -7,11 +7,11 @@ import { SectionHeader } from "@/components/section-header"
 
 export function CTAClosing() {
   return (
-    <section className="py-16 sm:py-20 lg:py-32 bg-gradient-to-br from-background via-muted/30 to-background relative overflow-hidden">
-      {/* Decorative Elements */}
+    <section className="py-16 sm:py-20 lg:py-32 bg-gradient-to-br from-background via-muted/30 to-background relative overflow-hidden" style={{ contain: 'layout style paint' }}>
+      {/* Decorative Elements - optimizado: menos blur en desktop para mejor rendimiento */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-20 w-96 h-96 bg-primary/10 rounded-full blur-xl lg:blur-2xl" style={{ willChange: 'opacity', transform: 'translateZ(0)' }} />
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/10 rounded-full blur-xl lg:blur-2xl" style={{ willChange: 'opacity', transform: 'translateZ(0)' }} />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

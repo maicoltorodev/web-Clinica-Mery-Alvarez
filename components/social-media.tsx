@@ -65,11 +65,11 @@ const socialNetworks = [
 
 export function SocialMedia() {
   return (
-    <section className="py-16 sm:py-20 lg:py-32 bg-gradient-to-br from-background via-muted/20 to-background relative overflow-hidden">
-      {/* Decorative Elements */}
+    <section className="py-16 sm:py-20 lg:py-32 bg-gradient-to-br from-background via-muted/20 to-background relative overflow-hidden" style={{ contain: 'layout style paint' }}>
+      {/* Decorative Elements - optimizado: menos blur en desktop para mejor rendimiento */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-20 w-96 h-96 bg-primary/5 rounded-full blur-xl lg:blur-2xl" style={{ willChange: 'opacity', transform: 'translateZ(0)' }} />
+        <div className="absolute bottom-20 left-20 w-96 h-96 bg-accent/5 rounded-full blur-xl lg:blur-2xl" style={{ willChange: 'opacity', transform: 'translateZ(0)' }} />
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -114,8 +114,8 @@ export function SocialMedia() {
                       : 'border-transparent lg:group-hover/item:border-primary/30'
                   }`} />
                   
-                  {/* Sombra - activa en viewport móvil y hover desktop */}
-                  <div className={`absolute -inset-1 rounded-2xl bg-primary/5 blur-xl transition-opacity duration-300 pointer-events-none -z-10 ${
+                  {/* Sombra - activa en viewport móvil y hover desktop - optimizada para móvil */}
+                  <div className={`absolute -inset-1 rounded-2xl bg-primary/5 blur-lg lg:blur-xl transition-opacity duration-300 pointer-events-none -z-10 ${
                     isInCenter 
                       ? 'opacity-100' 
                       : 'opacity-0 lg:group-hover/item:opacity-100'

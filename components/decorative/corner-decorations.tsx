@@ -30,13 +30,15 @@ export function CornerDecorations({
   
   return (
     <>
-      {/* Top-left corner */}
+      {/* Top-left corner - optimizado con will-change */}
       <div 
-        className={`absolute ${positionClass} ${sizeClass} border-t-2 border-l-2 border-accent ${roundedClass} transition-opacity duration-300 pointer-events-none z-20 ${isActive ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60 ${className}`} 
+        className={`absolute ${positionClass} ${sizeClass} border-t-2 border-l-2 border-accent ${roundedClass} transition-opacity duration-300 pointer-events-none z-20 ${isActive ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60 ${className}`}
+        style={isActive || undefined ? { willChange: 'opacity', transform: 'translateZ(0)' } : undefined}
       />
-      {/* Bottom-right corner */}
+      {/* Bottom-right corner - optimizado con will-change */}
       <div 
-        className={`absolute ${bottomPositionClass} ${sizeClass} border-b-2 border-r-2 border-accent ${bottomRoundedClass} transition-opacity duration-300 pointer-events-none z-20 ${isActive ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60 ${className}`} 
+        className={`absolute ${bottomPositionClass} ${sizeClass} border-b-2 border-r-2 border-accent ${bottomRoundedClass} transition-opacity duration-300 pointer-events-none z-20 ${isActive ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60 ${className}`}
+        style={isActive || undefined ? { willChange: 'opacity', transform: 'translateZ(0)' } : undefined}
       />
     </>
   )
