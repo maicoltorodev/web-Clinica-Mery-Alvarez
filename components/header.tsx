@@ -185,7 +185,7 @@ export function Header() {
           {/* Menu Panel */}
           <div className="lg:hidden fixed top-0 right-0 h-full w-full max-w-sm bg-white shadow-2xl z-[55] transform transition-transform duration-300 ease-out">
               {/* Header del menú */}
-              <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border bg-gradient-to-r from-primary/5 to-accent/5">
+              <div className="relative flex items-center justify-center p-4 sm:p-6 border-b border-border bg-gradient-to-r from-primary/5 to-accent/5">
                 <Image
                   src="/titulo.png"
                   alt="Clínica Mery Álvarez"
@@ -197,7 +197,7 @@ export function Header() {
                 />
                 <button
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="p-2 rounded-lg hover:bg-muted transition-colors"
+                  className="absolute right-4 sm:right-6 p-2 rounded-lg hover:bg-muted transition-colors"
                   aria-label="Cerrar menú"
                 >
                   <X className="h-6 w-6 text-foreground" />
