@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60 * 60 * 24 * 365, // 1 año de caché
     dangerouslyAllowSVG: true,
-    contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
@@ -17,11 +16,6 @@ const nextConfig: NextConfig = {
   
   // Optimizaciones de producción
   productionBrowserSourceMaps: false,
-  
-  // Optimizaciones de bundle
-  experimental: {
-    optimizePackageImports: ['lucide-react'],
-  },
   
   // Headers para caché y seguridad
   async headers() {
@@ -49,7 +43,7 @@ const nextConfig: NextConfig = {
       },
       {
         // Cache estático para imágenes
-        source: '/:path*\\.(jpg|jpeg|png|gif|ico|svg|webp|avif)',
+        source: '/(.*\\.(jpg|jpeg|png|gif|ico|svg|webp|avif))',
         headers: [
           {
             key: 'Cache-Control',
@@ -59,7 +53,7 @@ const nextConfig: NextConfig = {
       },
       {
         // Cache para fuentes
-        source: '/:path*\\.(woff|woff2|ttf|otf)',
+        source: '/(.*\\.(woff|woff2|ttf|otf))',
         headers: [
           {
             key: 'Cache-Control',
