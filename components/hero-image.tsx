@@ -18,9 +18,13 @@ export function HeroImage({ variant = 'mobile', className = '' }: HeroImageProps
     <div className={`${displayClass} ${variant === 'desktop' ? 'justify-start flex-shrink-0 w-full lg:w-auto order-1' : 'justify-center'} ${className}`}>
       <div className="relative group inline-block">
         {/* Professional frame with multiple border layers */}
-        <div className="relative z-10 p-[3px] rounded-2xl bg-gradient-to-br from-primary/40 via-accent/40 to-primary/40 shadow-2xl shadow-primary/20 group-hover:shadow-primary/30 transition-all duration-500 group-hover:scale-[1.01]">
+        <div className={`relative z-10 rounded-2xl bg-gradient-to-br from-primary/40 via-accent/40 to-primary/40 shadow-2xl shadow-primary/20 group-hover:shadow-primary/30 transition-all duration-500 group-hover:scale-[1.01] ${
+          variant === 'desktop' ? 'p-[5px]' : 'p-[3px]'
+        }`}>
           {/* Inner border with gradient */}
-          <div className="absolute inset-[3px] rounded-xl border-2 border-primary/20 pointer-events-none z-20" />
+          <div className={`absolute rounded-xl border pointer-events-none z-20 ${
+            variant === 'desktop' ? 'inset-[5px] border-[3px] border-primary/20' : 'inset-[3px] border-2 border-primary/20'
+          }`} />
           
           {/* Main image container */}
           <div className="relative rounded-xl overflow-hidden bg-gradient-to-br from-background to-muted/30">
