@@ -3,6 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart, ArrowRight, Sparkles } from "lucide-react"
+import { useInViewportCenter } from "@/lib/hooks"
 
 const products = [
   {
@@ -82,25 +83,25 @@ export function Products() {
   }
 
   return (
-    <section id="productos" className="py-24 lg:py-32 bg-background">
+    <section id="productos" className="py-16 sm:py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
-            <Sparkles className="h-4 w-4 text-primary" />
-            <span className="text-sm font-medium text-primary">Nuestra Tienda</span>
+        <div className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 border border-primary/20 mb-4 sm:mb-6">
+            <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
+            <span className="text-xs sm:text-sm font-medium text-primary">Nuestra Tienda</span>
           </div>
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-balance">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-balance">
             Productos para el <span className="text-gradient-brand">cuidado de la piel</span>
           </h2>
-          <p className="text-xl text-muted-foreground text-balance">
+          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground text-balance px-2">
             Una amplia gama de productos dermocosméticos recomendados por nuestros profesionales, diseñados 
             para el cuidado y rejuvenecimiento de la piel.
           </p>
         </div>
 
         {/* Categories */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-10 sm:mb-12">
           {categories.map((category, index) => (
             <div key={index} className="group relative">
               {/* Decorative border elements - same as hero */}
@@ -108,11 +109,11 @@ export function Products() {
               <div className="absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
               
               <Card className="border-border/50 hover:border-transparent transition-all duration-300 cursor-pointer relative z-10">
-                <CardContent className="p-4 text-center relative">
+                <CardContent className="p-3 sm:p-4 text-center relative">
                   {/* Corner accent decorations */}
                   <div className="absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-accent rounded-tl-md opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none z-20" />
                   <div className="absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none z-20" />
-                <h3 className="font-semibold text-sm mb-1 group-hover:text-primary transition-colors">
+                <h3 className="font-semibold text-xs sm:text-sm mb-1 group-hover:text-primary transition-colors leading-tight">
                   {category.name}
                 </h3>
                 <p className="text-xs text-muted-foreground">{category.count} productos</p>
@@ -123,37 +124,39 @@ export function Products() {
         </div>
 
         {/* Featured Products */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {products.map((product, index) => (
-            <div key={index} className="group relative">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10 sm:mb-12">
+          {products.map((product, index) => {
+            const { elementRef, isInCenter } = useInViewportCenter(0.35)
+            return (
+            <div key={index} ref={elementRef} className="group relative">
               {/* Decorative border elements - same as hero */}
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none z-0" />
-              <div className="absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
+              <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
+              <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`} />
               
               <Card className="border-border/50 hover:border-transparent transition-all duration-300 hover:shadow-xl overflow-hidden relative z-10">
-                <div className="relative aspect-square bg-gradient-to-br from-muted/50 to-muted/30 p-4 flex items-center justify-center overflow-hidden">
+                <div className="relative aspect-square bg-gradient-to-br from-muted/50 to-muted/30 p-3 sm:p-4 flex items-center justify-center overflow-hidden">
                   {/* Corner accent decorations */}
-                  <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none z-20" />
-                  <div className="absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none z-20" />
+                  <div className={`absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
+                  <div className={`absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
                   <img
                     src={product.image}
                     alt={product.name}
                     className="w-3/4 h-3/4 object-contain transition-transform duration-300 group-hover:scale-110"
                   />
-                  <div className="absolute top-4 right-4 z-10">
-                    <span className="px-2 py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border border-primary/20 backdrop-blur-sm">
+                  <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10">
+                    <span className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-xs font-medium bg-primary/10 text-primary rounded-full border border-primary/20 backdrop-blur-sm">
                       {product.category.split(" ")[1]}
                     </span>
                   </div>
                 </div>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-lg mb-2 line-clamp-2">{product.name}</CardTitle>
-                <CardDescription className="text-primary font-semibold text-lg">
+              <CardHeader className="pb-2 sm:pb-3 px-4 pt-4">
+                <CardTitle className="text-base sm:text-lg mb-2 line-clamp-2 leading-tight">{product.name}</CardTitle>
+                <CardDescription className="text-primary font-semibold text-base sm:text-lg">
                   {formatPrice(product.price)}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="pt-0">
-                <Button className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+              <CardContent className="pt-0 px-4 pb-4">
+                <Button className="w-full gap-2 group-hover:bg-primary group-hover:text-primary-foreground transition-colors h-10 sm:h-11 text-sm sm:text-base">
                   <ShoppingCart className="h-4 w-4" />
                   Añadir al carrito
                 </Button>
@@ -165,7 +168,7 @@ export function Products() {
 
         {/* CTA */}
         <div className="text-center">
-          <Button size="lg" variant="outline" className="gap-2">
+          <Button size="lg" variant="outline" className="gap-2 h-12 sm:h-11 w-full sm:w-auto text-base">
             Ver más productos
             <ArrowRight className="h-5 w-5" />
           </Button>

@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <section
       id="inicio"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/30 pt-16 sm:pt-20"
     >
       {/* Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -45,37 +45,37 @@ export function Hero() {
           </div>
 
           {/* Center - Content */}
-          <div className="w-full text-center">
+          <div className="w-full text-center px-2 sm:px-0">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-8">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Excelencia Médica desde 1999</span>
+            <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 sm:mb-8">
+              <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
+              <span className="text-xs sm:text-sm font-medium text-primary">Excelencia Médica desde 1999</span>
             </div>
 
             {/* Main Heading - Título */}
-            <div className="mb-8 flex justify-center">
+            <div className="mb-6 sm:mb-8 flex justify-center">
               <img
                 src="/titulo.png"
                 alt="Clínica Mery Álvarez"
-                className="h-32 sm:h-40 md:h-48 lg:h-56 xl:h-64 w-auto object-contain max-w-full"
+                className="h-24 xs:h-28 sm:h-36 md:h-44 lg:h-56 xl:h-64 w-auto object-contain max-w-full px-2"
               />
             </div>
 
             {/* Description */}
-            <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto text-balance">
+            <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto text-balance px-2">
               Somos una IPS que busca transformar tu vida desde el interior, brindando experiencias de salud y bienestar 
               a través de tratamientos personalizados realizados por profesionales con productos especializados y tecnología 
               de vanguardia, con el objetivo de resaltar tu belleza y promover estilos de vida saludable.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-              <Button size="lg" className="gap-2 group">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12 px-4 sm:px-0">
+              <Button size="lg" className="gap-2 group w-full sm:w-auto h-12 sm:h-11 text-base">
                 <Calendar className="h-5 w-5" />
                 <span>Agendar Valoración</span>
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button size="lg" variant="outline" className="gap-2" onClick={() => {
+              <Button size="lg" variant="outline" className="gap-2 w-full sm:w-auto h-12 sm:h-11 text-base" onClick={() => {
                 document.getElementById("tratamientos")?.scrollIntoView({ behavior: "smooth" })
               }}>
                 <span>Conocer Tratamientos</span>
@@ -83,22 +83,22 @@ export function Hero() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-8 border-t border-border max-w-3xl mx-auto">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 pt-6 sm:pt-8 border-t border-border max-w-3xl mx-auto px-4 sm:px-0">
               <div>
-                <div className="text-3xl sm:text-4xl font-bold text-gradient-brand mb-2">27+</div>
-                <div className="text-sm text-muted-foreground">Años de Experiencia</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient-brand mb-1 sm:mb-2">27+</div>
+                <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Años de Experiencia</div>
               </div>
               <div>
-                <div className="text-3xl sm:text-4xl font-bold text-gradient-brand mb-2">150K+</div>
-                <div className="text-sm text-muted-foreground">Mil Pacientes</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient-brand mb-1 sm:mb-2">150K+</div>
+                <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Mil Pacientes</div>
               </div>
               <div>
-                <div className="text-3xl sm:text-4xl font-bold text-gradient-brand mb-2">5</div>
-                <div className="text-sm text-muted-foreground">Sedes</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient-brand mb-1 sm:mb-2">5</div>
+                <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Sedes</div>
               </div>
               <div>
-                <div className="text-3xl sm:text-4xl font-bold text-gradient-brand mb-2">IPS</div>
-                <div className="text-sm text-muted-foreground">Certificada BPC</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient-brand mb-1 sm:mb-2">IPS</div>
+                <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Certificada BPC</div>
               </div>
             </div>
           </div>
