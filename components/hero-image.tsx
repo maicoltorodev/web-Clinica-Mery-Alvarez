@@ -18,7 +18,7 @@ export function HeroImage({ variant = 'mobile', className = '' }: HeroImageProps
     <div className={`${displayClass} ${variant === 'desktop' ? 'justify-start flex-shrink-0 w-full lg:w-auto order-1' : 'justify-center'} ${className}`}>
       <div className="relative group inline-block">
         {/* Professional frame with multiple border layers */}
-        <div className={`relative z-10 rounded-2xl bg-gradient-to-br from-primary/40 via-accent/40 to-primary/40 shadow-2xl shadow-primary/20 group-hover:shadow-primary/30 transition-all duration-500 group-hover:scale-[1.01] ${
+        <div className={`relative z-10 rounded-2xl bg-gradient-to-br from-primary/40 via-accent/40 to-primary/40 shadow-2xl shadow-primary/20 group-hover:shadow-primary/30 transition-all duration-500 ${
           variant === 'desktop' ? 'p-[8px]' : 'p-[3px]'
         }`}>
           {/* Inner border with gradient - más prominente en desktop */}
@@ -38,7 +38,7 @@ export function HeroImage({ variant = 'mobile', className = '' }: HeroImageProps
             <img
               src="/mery.png"
               alt="Clínica Mery Álvarez"
-              className={`${sizeClass} h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02]`}
+              className={`${sizeClass} h-auto object-cover relative transition-all duration-500`}
               style={PROFESSIONAL_IMAGE_FILTER}
             />
             {/* Professional overlay for depth */}
