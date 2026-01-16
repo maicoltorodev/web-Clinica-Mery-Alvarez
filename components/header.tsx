@@ -38,7 +38,7 @@ export function Header() {
           {/* Logo */}
           <a href="#inicio" className="flex items-center flex-shrink-0">
             <img
-              src="/logo.png"
+              src="/flower.gif"
               alt="Clínica Mery Álvarez"
               className="h-10 sm:h-12 w-auto lg:h-16 object-contain"
             />
@@ -114,7 +114,7 @@ export function Header() {
               {/* Header del menú */}
               <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border bg-gradient-to-r from-primary/5 to-accent/5">
                 <img
-                  src="/logo.png"
+                  src="/flower.gif"
                   alt="Clínica Mery Álvarez"
                   className="h-8 sm:h-10 w-auto object-contain"
                 />

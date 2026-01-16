@@ -19,7 +19,7 @@ const services = [
     icon: Heart,
     title: "Tratamientos Corporales",
     description:
-      "Te ayudamos a restaurar tu cuerpo con tratamientos de medicina estética y equipos innovadores que moldearán tu figura de forma natural.",
+      "Te ayudamos a restaurar tu cuerpo con tratamientos de medicina estética y equipos innovadores que moldearán tu figura de forma natural sin perder tu comodidad en el proceso.",
     treatments: ["Criolipólisis", "Tonificación corporal", "Radiofrecuencia", "Depilación Láser Diodo", "Rejuvenecimiento de manos y cuello"],
     color: "from-primary/10 to-primary/20",
     iconColor: "text-primary",

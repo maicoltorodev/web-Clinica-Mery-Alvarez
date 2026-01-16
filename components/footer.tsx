@@ -1,6 +1,6 @@
 "use client"
 
-import { Phone, Mail, MapPin, Clock } from "lucide-react"
+import { Phone, Mail, MapPin, Clock, Home, Users, Sparkles, UserCheck, MessageSquare, Calendar, ArrowRight, Smile, Users2, Flower, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function Footer() {
@@ -28,28 +28,33 @@ export function Footer() {
             <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Enlaces Rápidos</h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
-                <a href="#inicio" className="text-background/70 hover:text-primary transition-colors">
-                  Inicio
+                <a href="#inicio" className="flex items-center gap-2 text-background/70 hover:text-primary transition-colors group">
+                  <Home className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Inicio</span>
                 </a>
               </li>
               <li>
-                <a href="#nosotros" className="text-background/70 hover:text-primary transition-colors">
-                  Nosotros
+                <a href="#nosotros" className="flex items-center gap-2 text-background/70 hover:text-primary transition-colors group">
+                  <Users className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Nosotros</span>
                 </a>
               </li>
               <li>
-                <a href="#tratamientos" className="text-background/70 hover:text-primary transition-colors">
-                  Tratamientos
+                <a href="#tratamientos" className="flex items-center gap-2 text-background/70 hover:text-primary transition-colors group">
+                  <Sparkles className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Tratamientos</span>
                 </a>
               </li>
               <li>
-                <a href="#equipo" className="text-background/70 hover:text-primary transition-colors">
-                  Equipo Médico
+                <a href="#equipo" className="flex items-center gap-2 text-background/70 hover:text-primary transition-colors group">
+                  <UserCheck className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Equipo Médico</span>
                 </a>
               </li>
               <li>
-                <a href="#testimonios" className="text-background/70 hover:text-primary transition-colors">
-                  Testimonios
+                <a href="#testimonios" className="flex items-center gap-2 text-background/70 hover:text-primary transition-colors group">
+                  <MessageSquare className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Testimonios</span>
                 </a>
               </li>
             </ul>
@@ -60,23 +65,27 @@ export function Footer() {
             <h3 className="font-semibold text-base sm:text-lg mb-3 sm:mb-4">Tratamientos</h3>
             <ul className="space-y-2 sm:space-y-3">
               <li>
-                <a href="#tratamientos" className="text-background/70 hover:text-primary transition-colors">
-                  Faciales
+                <a href="#tratamientos" className="flex items-center gap-2 text-background/70 hover:text-primary transition-colors group">
+                  <Smile className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Faciales</span>
                 </a>
               </li>
               <li>
-                <a href="#tratamientos" className="text-background/70 hover:text-primary transition-colors">
-                  Corporales
+                <a href="#tratamientos" className="flex items-center gap-2 text-background/70 hover:text-primary transition-colors group">
+                  <Users2 className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Corporales</span>
                 </a>
               </li>
               <li>
-                <a href="#tratamientos" className="text-background/70 hover:text-primary transition-colors">
-                  Zona Íntima
+                <a href="#tratamientos" className="flex items-center gap-2 text-background/70 hover:text-primary transition-colors group">
+                  <Flower className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Zona Íntima</span>
                 </a>
               </li>
               <li>
-                <a href="#tratamientos" className="text-background/70 hover:text-primary transition-colors">
-                  Tecnología
+                <a href="#tratamientos" className="flex items-center gap-2 text-background/70 hover:text-primary transition-colors group">
+                  <Zap className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  <span>Tecnología</span>
                 </a>
               </li>
             </ul>
@@ -104,6 +113,12 @@ export function Footer() {
                 </div>
               </li>
               <li className="flex items-start gap-3">
+                <Mail className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <a href="mailto:contacto@clinicameryalvarez.com" className="text-sm sm:text-base text-background/70 hover:text-primary transition-colors">
+                  contacto@clinicameryalvarez.com
+                </a>
+              </li>
+              <li className="flex items-start gap-3">
                 <Clock className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                 <div className="text-sm sm:text-base text-background/70 leading-relaxed">
                   <div className="mb-2">
@@ -129,8 +144,10 @@ export function Footer() {
               <h3 className="text-lg sm:text-xl font-semibold mb-2">Te ayudamos a rejuvenecer naturalmente</h3>
               <p className="text-sm sm:text-base text-background/70">Agenda tu cita de valoración en cualquiera de nuestras sedes. ¡Recuerda que TÚ eres tu mejor inversión!</p>
             </div>
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-foreground w-full md:w-auto h-12 sm:h-11 text-base">
-              Agendar Cita Ahora
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-foreground w-full md:w-auto h-12 sm:h-11 text-base gap-2 group">
+              <Calendar className="h-5 w-5" />
+              <span>Agendar Cita Ahora</span>
+              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
         </div>
