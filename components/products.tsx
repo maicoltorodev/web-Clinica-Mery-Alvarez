@@ -39,7 +39,7 @@ function ProductCard({ product, formatPrice }: { product: typeof products[0], fo
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0 px-4 pb-4">
-          <Button className="w-full gap-2 group-hover:bg-accent group-hover:text-background transition-colors h-10 sm:h-11 text-sm sm:text-base">
+          <Button className={`w-full gap-2 transition-colors h-10 sm:h-11 text-sm sm:text-base ${isInCenter ? '!bg-accent !text-background lg:!bg-gradient-to-r lg:!from-primary lg:!to-accent lg:!text-background lg:group-hover:!bg-accent lg:group-hover:!text-background' : 'lg:group-hover:!bg-accent lg:group-hover:!text-background'}`}>
             <ShoppingCart className="h-4 w-4" />
             Añadir al carrito
           </Button>
@@ -207,13 +207,13 @@ export function Products() {
               >
                 {categories.map((category, index) => (
                   <div key={index} className="min-w-full flex-shrink-0">
-                    <div className="group relative px-2">
+                    <div className="group relative px-2 py-2">
                       {/* Decorative border elements - same as hero */}
                       <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-xl blur-lg transition-opacity duration-300 pointer-events-none z-0 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
                       <div className={`absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg transition-opacity duration-300 pointer-events-none z-0 ${index === currentCategoryIndex ? 'opacity-100' : 'opacity-0'}`} />
                       
                       <Card className={`border-transparent transition-all duration-300 relative z-10 ${index === currentCategoryIndex ? 'border-primary/50' : ''}`}>
-                        <CardContent className="p-4 text-center relative">
+                        <CardContent className="p-5 py-6 text-center relative">
                           {/* Corner accent decorations */}
                           <div className={`absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-accent rounded-tl-md transition-opacity duration-300 pointer-events-none z-20 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
                           <div className={`absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md transition-opacity duration-300 pointer-events-none z-20 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
@@ -247,7 +247,7 @@ export function Products() {
             return (
               <div 
                 key={index} 
-                className="group relative cursor-pointer"
+                className="group relative cursor-pointer p-1"
                 onClick={() => handleCategoryClick(category.name, index)}
               >
                 {/* Decorative border elements - same as hero */}
@@ -255,7 +255,7 @@ export function Products() {
                 <div className={`absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-lg transition-opacity duration-300 pointer-events-none z-0 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
                 
                 <Card className={`border-border/50 hover:border-transparent transition-all duration-300 relative z-10 ${isActive ? 'border-primary/50' : ''}`}>
-                  <CardContent className="p-3 sm:p-4 text-center relative">
+                  <CardContent className="p-4 py-5 sm:p-5 sm:py-6 text-center relative">
                     {/* Corner accent decorations */}
                     <div className={`absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-accent rounded-tl-md transition-opacity duration-300 pointer-events-none z-20 ${isActive ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'}`} />
                     <div className={`absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md transition-opacity duration-300 pointer-events-none z-20 ${isActive ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'}`} />

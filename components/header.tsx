@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Calendar, ShoppingBag, Users, Sparkles, UserCheck, MessageSquare, Phone } from "lucide-react"
+import { useMobileMenu } from "@/lib/mobile-menu-context"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { isMobileMenuOpen, setIsMobileMenuOpen } = useMobileMenu()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +16,35 @@ export function Header() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      // Guardar el scroll actual
+      const scrollY = window.scrollY
+      // Bloquear el scroll del body
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = '100%'
+      document.body.style.overflow = 'hidden'
+    } else {
+      // Restaurar el scroll del body
+      const scrollY = document.body.style.top
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      document.body.style.overflow = ''
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+      }
+    }
+    return () => {
+      // Cleanup al desmontar
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      document.body.style.overflow = ''
+    }
+  }, [isMobileMenuOpen])
 
   const navItems = [
     { label: "Nosotros", href: "#nosotros", icon: Users },
@@ -30,7 +60,7 @@ export function Header() {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
           ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-border"
-          : "bg-transparent"
+          : "bg-white/95 backdrop-blur-md border-b border-border/50"
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -114,7 +144,7 @@ export function Header() {
               {/* Header del menú */}
               <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border bg-gradient-to-r from-primary/5 to-accent/5">
                 <img
-                  src="/flower.gif"
+                  src="/titulo.png"
                   alt="Clínica Mery Álvarez"
                   className="h-8 sm:h-10 w-auto object-contain"
                 />

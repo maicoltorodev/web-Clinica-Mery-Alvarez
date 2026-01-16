@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react"
 import { MessageCircle, X } from "lucide-react"
+import { useMobileMenu } from "@/lib/mobile-menu-context"
 
 export function WhatsAppFAB() {
+  const { isMobileMenuOpen } = useMobileMenu()
   const [showMessage, setShowMessage] = useState(false)
   const [hasShown, setHasShown] = useState(false)
 
@@ -28,6 +30,11 @@ export function WhatsAppFAB() {
     handleScroll() // Verificar en carga inicial
     return () => window.removeEventListener("scroll", handleScroll)
   }, [hasShown])
+
+  // Ocultar el FAB cuando el menú móvil está abierto
+  if (isMobileMenuOpen) {
+    return null
+  }
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">

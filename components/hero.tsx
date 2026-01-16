@@ -1,9 +1,12 @@
 "use client"
 
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Calendar, ArrowRight, Sparkles } from "lucide-react"
 
 export function Hero() {
+  const [mobileImageLoaded, setMobileImageLoaded] = useState(false)
+  const [desktopImageLoaded, setDesktopImageLoaded] = useState(false)
   return (
     <section
       id="inicio"
@@ -44,14 +47,22 @@ export function Hero() {
                 
                 {/* Main image container */}
                 <div className="relative bg-gradient-to-br from-background to-muted/50 p-2 sm:p-3 rounded-lg shadow-xl border border-border/50">
-                  <div className="relative overflow-hidden rounded-md">
+                  <div className="relative overflow-hidden rounded-md aspect-[3/4]">
+                    {/* Skeleton */}
+                    {!mobileImageLoaded && (
+                      <div className="absolute inset-0 bg-gradient-to-br from-muted to-muted/50 animate-pulse rounded-md z-0" />
+                    )}
+                    
                     <img
                       src="/mery.png"
                       alt="Clínica Mery Álvarez"
-                      className="w-full h-auto object-contain relative z-10"
+                      className={`w-full h-full object-contain relative z-10 transition-opacity duration-300 ${
+                        mobileImageLoaded ? "opacity-100" : "opacity-0"
+                      }`}
+                      onLoad={() => setMobileImageLoaded(true)}
                     />
                     {/* Subtle overlay gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 pointer-events-none z-10" />
                   </div>
                   
                   {/* Corner accent decorations */}
@@ -111,14 +122,22 @@ export function Hero() {
               
               {/* Main image container */}
               <div className="relative bg-gradient-to-br from-background to-muted/50 p-3 sm:p-4 rounded-xl shadow-2xl border border-border/50">
-                <div className="relative overflow-hidden rounded-lg">
+                <div className="relative overflow-hidden rounded-lg aspect-[3/4]">
+                  {/* Skeleton */}
+                  {!desktopImageLoaded && (
+                    <div className="absolute inset-0 bg-gradient-to-br from-muted to-muted/50 animate-pulse rounded-lg z-0" />
+                  )}
+                  
                   <img
                     src="/mery.png"
                     alt="Clínica Mery Álvarez"
-                    className="w-full h-auto object-contain relative z-10"
+                    className={`w-full h-full object-contain relative z-10 transition-opacity duration-300 ${
+                      desktopImageLoaded ? "opacity-100" : "opacity-0"
+                    }`}
+                    onLoad={() => setDesktopImageLoaded(true)}
                   />
                   {/* Subtle overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 pointer-events-none z-10" />
                 </div>
                 
                 {/* Corner accent decorations */}
