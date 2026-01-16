@@ -1,19 +1,27 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Calendar, ShoppingBag, Users, Sparkles, UserCheck, MessageSquare, Phone } from "lucide-react"
 import { useMobileMenu } from "@/lib/mobile-menu-context"
+import { scrollToSection } from "@/lib/utils"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { isMobileMenuOpen, setIsMobileMenuOpen } = useMobileMenu()
 
   useEffect(() => {
+    let ticking = false
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 20)
+          ticking = false
+        })
+        ticking = true
+      }
     }
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
@@ -26,25 +34,24 @@ export function Header() {
       document.body.style.top = `-${scrollY}px`
       document.body.style.width = '100%'
       document.body.style.overflow = 'hidden'
-    } else {
-      // Restaurar el scroll del body
-      const scrollY = document.body.style.top
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-      document.body.style.overflow = ''
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+      
+      return () => {
+        // Restaurar el scroll del body al cerrar o desmontar
+        const savedScrollY = document.body.style.top
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.width = ''
+        document.body.style.overflow = ''
+        if (savedScrollY) {
+          window.scrollTo(0, parseInt(savedScrollY || '0') * -1)
+        }
       }
     }
-    return () => {
-      // Cleanup al desmontar
-      document.body.style.position = ''
-      document.body.style.top = ''
-      document.body.style.width = ''
-      document.body.style.overflow = ''
-    }
   }, [isMobileMenuOpen])
+  
+  const handleScrollToContact = useCallback(() => {
+    scrollToSection("contacto")
+  }, [])
 
   const navItems = [
     { label: "Nosotros", href: "#nosotros", icon: Users },
@@ -82,9 +89,7 @@ export function Header() {
               <Button 
                 size="sm" 
                 className="gap-2 h-9 text-xs sm:text-sm px-2 sm:px-4"
-                onClick={() => {
-                  document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })
-                }}
+                onClick={handleScrollToContact}
               >
                 <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 <span>Agendar Cita</span>
@@ -112,9 +117,7 @@ export function Header() {
 
           {/* Desktop CTA Button */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Button size="sm" className="gap-2" onClick={() => {
-              document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })
-            }}>
+            <Button size="sm" className="gap-2" onClick={handleScrollToContact}>
               <Calendar className="h-4 w-4" />
               <span>Agendar Cita</span>
             </Button>
@@ -191,7 +194,7 @@ export function Header() {
                   className="w-full gap-2 h-12 text-base font-semibold"
                   onClick={() => {
                     setIsMobileMenuOpen(false)
-                    document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" })
+                    handleScrollToContact()
                   }}
                 >
                   <Calendar className="h-5 w-5" />

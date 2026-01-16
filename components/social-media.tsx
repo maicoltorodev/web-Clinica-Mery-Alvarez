@@ -1,7 +1,10 @@
 "use client"
 
-import { Facebook, Instagram, Youtube, MessageCircle, ExternalLink } from "lucide-react"
+import { Facebook, Instagram, Youtube, MessageCircle, ExternalLink, Share2 } from "lucide-react"
 import { useInViewportCenter } from "@/lib/hooks"
+import { SectionHeader } from "@/components/section-header"
+import { DecorativeBorders } from "@/components/decorative/decorative-borders"
+import { CornerDecorations } from "@/components/decorative/corner-decorations"
 
 const socialNetworks = [
   {
@@ -71,18 +74,13 @@ export function SocialMedia() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/20 border-2 border-primary/40 shadow-lg shadow-primary/10 backdrop-blur-sm mb-4 sm:mb-6">
-            <span className="text-xs sm:text-sm font-semibold text-primary">Conecta con nosotros</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-balance">
-            Síguenos en nuestras <span className="text-gradient-brand">redes sociales</span>
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground text-balance">
-            Mantente al día con nuestros tratamientos, consejos de expertos y promociones exclusivas. 
-            Únete a nuestra comunidad y descubre cómo transformar tu bienestar.
-          </p>
-        </div>
+        <SectionHeader
+          badge={{ icon: Share2, text: "Conecta con nosotros" }}
+          title={
+            <>Síguenos en nuestras <span className="text-gradient-brand">redes sociales</span></>
+          }
+          description="Mantente al día con nuestros tratamientos, consejos de expertos y promociones exclusivas. Únete a nuestra comunidad y descubre cómo transformar tu bienestar."
+        />
         
         {/* Social Networks Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -97,17 +95,13 @@ export function SocialMedia() {
                 rel="noopener noreferrer"
                 className="block h-full"
               >
-                {/* Decorative border elements */}
-                <div className={`absolute -inset-4 bg-gradient-to-br from-primary/10 via-accent/10 to-primary/10 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
-                <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-100`} />
+                <DecorativeBorders isActive={isInCenter} blurIntensity="xl" />
                 
                 <div className="relative bg-card border border-border/50 hover:border-transparent rounded-2xl p-6 sm:p-8 transition-all duration-300 hover:shadow-2xl overflow-hidden z-10 h-full flex flex-col">
                   {/* Background gradient overlay */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${network.gradient} transition-opacity duration-300 ${isInCenter ? 'opacity-5' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-5`} />
                   
-                  {/* Corner accent decorations */}
-                  <div className={`absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
-                  <div className={`absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
+                  <CornerDecorations isActive={isInCenter} size="medium" position="inside" />
                   
                   {/* Icon */}
                   <div className="mb-4 sm:mb-6 relative z-10">

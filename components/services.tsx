@@ -4,6 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Sparkles, Heart, Flower, Eye } from "lucide-react"
 import { useInViewportCenter } from "@/lib/hooks"
+import { SectionHeader } from "@/components/section-header"
+import { DecorativeBorders } from "@/components/decorative/decorative-borders"
+import { CornerDecorations } from "@/components/decorative/corner-decorations"
+import { OverlayGradient } from "@/components/decorative/overlay-gradient"
 
 const services = [
   {
@@ -49,19 +53,13 @@ export function Services() {
     <section id="tratamientos" className="py-16 sm:py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/20 border-2 border-primary/40 shadow-lg shadow-primary/10 backdrop-blur-sm mb-4 sm:mb-6">
-            <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
-            <span className="text-xs sm:text-sm font-semibold text-primary">Nuestros Servicios</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-balance">
-            Tratamientos de <span className="text-gradient-gold">Excelencia</span>
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground text-balance px-2">
-            Realizamos una variedad de tratamientos de medicina estética y antienvejecimiento para el cuidado del rostro y el cuerpo, 
-            100% personalizados, de rápida recuperación y mínimamente invasivos.
-          </p>
-        </div>
+        <SectionHeader
+          badge={{ icon: Sparkles, text: "Nuestros Servicios" }}
+          title={
+            <>Tratamientos de <span className="text-gradient-gold">Excelencia</span></>
+          }
+          description="Realizamos una variedad de tratamientos de medicina estética y antienvejecimiento para el cuidado del rostro y el cuerpo, 100% personalizados, de rápida recuperación y mínimamente invasivos."
+        />
 
         {/* Services Grid */}
         <div className="grid md:grid-cols-2 gap-6 sm:gap-8 lg:gap-6">
@@ -74,18 +72,12 @@ export function Services() {
                 ref={elementRef}
                 className="group relative"
               >
-                {/* Decorative border elements - same as hero */}
-                <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
-                <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-100`} />
+                <DecorativeBorders isActive={isInCenter} />
                 
                 <Card className="border-border/50 hover:border-transparent transition-all duration-300 hover:shadow-xl overflow-hidden relative z-10">
                   <div className={`bg-gradient-to-br ${service.color} p-5 sm:p-6 lg:p-8 relative`}>
-                    {/* Subtle overlay gradient - activa en mobile y desktop */}
-                    <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 transition-opacity duration-300 pointer-events-none z-10 ${isInCenter ? 'opacity-100' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-100`} />
-                    
-                    {/* Corner accent decorations */}
-                    <div className={`absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
-                    <div className={`absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
+                    <OverlayGradient isActive={isInCenter} />
+                    <CornerDecorations isActive={isInCenter} size="medium" position="outside" />
                   <CardHeader className="pb-3 sm:pb-4">
                     <div className="flex items-start justify-between mb-3 sm:mb-4">
                       <div className={`p-2.5 sm:p-3 rounded-lg bg-background ${service.iconColor}`}>

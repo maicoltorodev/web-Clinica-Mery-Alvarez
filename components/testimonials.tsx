@@ -1,9 +1,12 @@
 "use client"
 
-import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Star, Quote, ArrowRight, MessageSquare, ChevronLeft, ChevronRight } from "lucide-react"
+import { useCarousel } from "@/lib/hooks"
+import { SectionHeader } from "@/components/section-header"
+import { DecorativeBorders } from "@/components/decorative/decorative-borders"
+import { CornerDecorations } from "@/components/decorative/corner-decorations"
 
 const testimonials = [
   {
@@ -33,16 +36,7 @@ const testimonials = [
 ]
 
 export function Testimonials() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1))
-  }
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1))
-  }
-
+  const { currentIndex, goToPrevious, goToNext, goToIndex } = useCarousel(testimonials.length, 0)
   const currentTestimonial = testimonials[currentIndex]
 
   return (
@@ -55,25 +49,20 @@ export function Testimonials() {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/20 border-2 border-primary/40 shadow-lg shadow-primary/10 backdrop-blur-sm mb-4 sm:mb-6">
-            <MessageSquare className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
-            <span className="text-xs sm:text-sm font-semibold text-primary">Testimonios</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-balance">
-            Lo que dicen <span className="text-gradient-gold">nuestros pacientes</span>
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground text-balance px-2">
-            La satisfacción de nuestros pacientes es nuestra mayor recompensa
-          </p>
-        </div>
+        <SectionHeader
+          badge={{ icon: MessageSquare, text: "Testimonios" }}
+          title={
+            <>Lo que dicen <span className="text-gradient-gold">nuestros pacientes</span></>
+          }
+          description="La satisfacción de nuestros pacientes es nuestra mayor recompensa"
+        />
 
         {/* Carousel Container */}
         <div className="max-w-4xl mx-auto">
           <div className="relative">
             {/* Navigation Arrows */}
             <button
-              onClick={handlePrevious}
+              onClick={goToPrevious}
               className="absolute left-0 sm:-left-12 top-1/2 -translate-y-1/2 z-20 p-3 sm:p-4 rounded-full bg-background border-2 border-border hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
               aria-label="Testimonio anterior"
             >
@@ -81,7 +70,7 @@ export function Testimonials() {
             </button>
 
             <button
-              onClick={handleNext}
+              onClick={goToNext}
               className="absolute right-0 sm:-right-12 top-1/2 -translate-y-1/2 z-20 p-3 sm:p-4 rounded-full bg-background border-2 border-border hover:border-primary shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 group"
               aria-label="Testimonio siguiente"
             >
@@ -90,18 +79,14 @@ export function Testimonials() {
 
             {/* Testimonial Card */}
             <div className="relative group">
-              {/* Decorative border elements - same as hero */}
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-3xl blur-xl opacity-60 transition-opacity duration-300 pointer-events-none z-0" />
-              <div className="absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-2xl opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
+              <DecorativeBorders isActive={true} blurIntensity="xl" roundedSize="3xl" />
               
               <Card className="border-border/50 transition-all duration-300 relative z-10 min-h-[400px] sm:min-h-[450px] lg:min-h-[500px]">
                 <CardContent className="p-8 sm:p-12 lg:p-16 relative h-full flex flex-col">
                   {/* Subtle overlay gradient - siempre visible pero más intenso en mobile */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none z-10 opacity-50 lg:opacity-30" />
                   
-                  {/* Corner accent decorations */}
-                  <div className="absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 border-accent rounded-tl-lg opacity-60 pointer-events-none z-20" />
-                  <div className="absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 border-accent rounded-br-lg opacity-60 pointer-events-none z-20" />
+                  <CornerDecorations isActive={true} size="large" />
                   
                   {/* Quote Icon - Large */}
                   <div className="absolute top-6 right-6 sm:top-8 sm:right-8 opacity-10">
@@ -139,7 +124,7 @@ export function Testimonials() {
                     {testimonials.map((_, index) => (
                       <button
                         key={index}
-                        onClick={() => setCurrentIndex(index)}
+                        onClick={() => goToIndex(index)}
                         className={`h-2 sm:h-2.5 rounded-full transition-all duration-300 ${
                           index === currentIndex
                             ? "w-8 sm:w-10 bg-primary"

@@ -3,6 +3,10 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { UserCheck } from "lucide-react"
 import { useInViewportCenter } from "@/lib/hooks"
+import { SectionHeader } from "@/components/section-header"
+import { DecorativeBorders } from "@/components/decorative/decorative-borders"
+import { CornerDecorations } from "@/components/decorative/corner-decorations"
+import { OverlayGradient } from "@/components/decorative/overlay-gradient"
 
 const teamMembers = [
   {
@@ -36,18 +40,13 @@ export function Team() {
     <section id="equipo" className="py-16 sm:py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/20 border-2 border-primary/40 shadow-lg shadow-primary/10 backdrop-blur-sm mb-4 sm:mb-6">
-            <UserCheck className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
-            <span className="text-xs sm:text-sm font-semibold text-primary">Nuestro Equipo</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-balance">
-            Nuestro <span className="text-gradient-gold">Equipo Médico</span>
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground text-balance px-2">
-            Profesionales altamente capacitados comprometidos con tu bienestar y belleza
-          </p>
-        </div>
+        <SectionHeader
+          badge={{ icon: UserCheck, text: "Nuestro Equipo" }}
+          title={
+            <>Nuestro <span className="text-gradient-gold">Equipo Médico</span></>
+          }
+          description="Profesionales altamente capacitados comprometidos con tu bienestar y belleza"
+        />
 
         {/* Team Grid */}
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-8 xl:gap-10 max-w-6xl xl:max-w-7xl mx-auto">
@@ -61,9 +60,7 @@ export function Team() {
               ref={elementRef} 
               className={`group relative ${isMery ? 'order-first md:order-none' : ''}`}
             >
-              {/* Decorative border elements - same as hero */}
-              <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
-              <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-100`} />
+              <DecorativeBorders isActive={isInCenter} />
               
               <Card className="border-border/50 hover:border-transparent transition-all duration-300 overflow-hidden relative z-10">
                 {/* Image container with border design */}
@@ -76,7 +73,7 @@ export function Team() {
                         alt={member.name}
                         className="w-full h-full object-cover relative z-10"
                       />
-                      {/* Subtle overlay gradient - activa en mobile y desktop */}
+                      {/* Subtle overlay gradient - siempre visible pero más intenso cuando está activo */}
                       <div className={`absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 transition-opacity duration-300 pointer-events-none z-10 ${isInCenter ? 'opacity-100' : 'opacity-50'} lg:opacity-50 lg:group-hover:opacity-100`} />
                       
                       {/* Logo badge */}
@@ -89,9 +86,7 @@ export function Team() {
                       </div>
                     </div>
                     
-                    {/* Corner accent decorations - same as hero */}
-                    <div className={`absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
-                    <div className={`absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
+                    <CornerDecorations isActive={isInCenter} size="medium" position="outside" />
                   </div>
                 </div>
               <CardContent className="p-4 sm:p-6 text-center sm:text-left">

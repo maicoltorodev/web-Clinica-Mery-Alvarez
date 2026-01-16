@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useRef, useState, createContext, useContext, useCallback } from "react"
+import React, { useEffect, useRef, useState, createContext, useContext, useCallback, useMemo } from "react"
 
 // Contexto para gestionar qué elemento está activo
 interface ViewportCenterContextType {
@@ -98,15 +98,21 @@ export function ViewportCenterProvider({ children }: { children: React.ReactNode
     }
   }, [])
 
+  // Memoizar el valor del contexto para evitar re-renders innecesarios
+  const contextValue = useMemo(
+    () => ({
+      registerElement,
+      unregisterElement,
+      activeElementId,
+      subscribe,
+    }),
+    [activeElementId, registerElement, unregisterElement, subscribe]
+  )
+
   return React.createElement(
     ViewportCenterContext.Provider,
     {
-      value: {
-        registerElement,
-        unregisterElement,
-        activeElementId,
-        subscribe,
-      },
+      value: contextValue,
     },
     children
   )
@@ -148,17 +154,25 @@ export function useInViewportCenter(threshold: number = 0.4, elementId?: string)
       // Verificar si estamos en desktop (lg breakpoint = 1024px)
       const isDesktop = () => window.innerWidth >= 1024
 
+      // Throttle mejorado con requestAnimationFrame
+      let ticking = false
       const checkPosition = () => {
-        const rect = element.getBoundingClientRect()
-        const viewportHeight = window.innerHeight
-        const viewportCenter = viewportHeight / 2
-        
-        const elementCenter = rect.top + rect.height / 2
-        const distanceFromCenter = Math.abs(elementCenter - viewportCenter)
-        const isNearCenter = distanceFromCenter < (viewportHeight * threshold)
-        const isVisible = rect.top < viewportHeight && rect.bottom > 0
-        
-        setIsInCenter(isNearCenter && isVisible)
+        if (!ticking) {
+          window.requestAnimationFrame(() => {
+            const rect = element.getBoundingClientRect()
+            const viewportHeight = window.innerHeight
+            const viewportCenter = viewportHeight / 2
+            
+            const elementCenter = rect.top + rect.height / 2
+            const distanceFromCenter = Math.abs(elementCenter - viewportCenter)
+            const isNearCenter = distanceFromCenter < (viewportHeight * threshold)
+            const isVisible = rect.top < viewportHeight && rect.bottom > 0
+            
+            setIsInCenter(isNearCenter && isVisible)
+            ticking = false
+          })
+          ticking = true
+        }
       }
 
       // Activar eventos tanto en mobile como desktop
@@ -174,4 +188,35 @@ export function useInViewportCenter(threshold: number = 0.4, elementId?: string)
   }, [threshold, context])
 
   return { elementRef, isInCenter }
+}
+
+/**
+ * Hook para manejar navegación de carruseles/carrousels
+ * @param totalItems - Número total de items en el carrusel
+ * @param initialIndex - Índice inicial (default: 0)
+ */
+export function useCarousel(totalItems: number, initialIndex: number = 0) {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex)
+
+  const goToPrevious = useCallback(() => {
+    setCurrentIndex((prev) => (prev === 0 ? totalItems - 1 : prev - 1))
+  }, [totalItems])
+
+  const goToNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev === totalItems - 1 ? 0 : prev + 1))
+  }, [totalItems])
+
+  const goToIndex = useCallback((index: number) => {
+    if (index >= 0 && index < totalItems) {
+      setCurrentIndex(index)
+    }
+  }, [totalItems])
+
+  return {
+    currentIndex,
+    goToPrevious,
+    goToNext,
+    goToIndex,
+    setCurrentIndex,
+  }
 }

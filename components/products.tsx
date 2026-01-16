@@ -1,29 +1,28 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, memo } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ShoppingCart, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react"
-import { useInViewportCenter } from "@/lib/hooks"
+import { useInViewportCenter, useCarousel } from "@/lib/hooks"
+import { formatPrice } from "@/lib/utils"
+import { SectionHeader } from "@/components/section-header"
+import { DecorativeBorders } from "@/components/decorative/decorative-borders"
+import { CornerDecorations } from "@/components/decorative/corner-decorations"
+import { OverlayGradient } from "@/components/decorative/overlay-gradient"
 
 // Componente separado para cada producto para mantener hooks estables
-function ProductCard({ product, formatPrice }: { product: typeof products[0], formatPrice: (price: number) => string }) {
+const ProductCard = memo(function ProductCard({ product }: { product: typeof products[0] }) {
   const { elementRef, isInCenter } = useInViewportCenter(0.35, `product-${product.id}`)
   
   return (
     <div key={product.id} ref={elementRef} className="group relative">
-      {/* Decorative border elements - same as hero */}
-      <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
-      <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-100`} />
+      <DecorativeBorders isActive={isInCenter} />
       
       <Card className="border-border/50 hover:border-transparent transition-all duration-300 hover:shadow-xl overflow-hidden relative z-10">
         <div className="relative aspect-square bg-white p-3 sm:p-4 flex items-center justify-center overflow-hidden">
-          {/* Subtle overlay gradient - activa en mobile y desktop */}
-          <div className={`absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 transition-opacity duration-300 pointer-events-none z-10 ${isInCenter ? 'opacity-100' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-100`} />
-          
-          {/* Corner accent decorations */}
-          <div className={`absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-accent rounded-tl-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
-          <div className={`absolute bottom-2 right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg transition-opacity duration-300 pointer-events-none z-20 ${isInCenter ? 'opacity-60' : 'opacity-0'} lg:opacity-0 lg:group-hover:opacity-60`} />
+          <OverlayGradient isActive={isInCenter} />
+          <CornerDecorations isActive={isInCenter} size="medium" position="inside" />
           <img
             src={product.image}
             alt={product.name}
@@ -50,7 +49,7 @@ function ProductCard({ product, formatPrice }: { product: typeof products[0], fo
       </Card>
     </div>
   )
-}
+})
 
 const products = [
   {
@@ -119,75 +118,67 @@ const products = [
   },
 ]
 
-const categories = [
-  { name: "Todos", count: products.length },
-  { name: "Línea Antiedad", count: 6 },
-  { name: "Línea Capilar", count: 3 },
-  { name: "Línea Corporal", count: 2 },
-  { name: "Línea Nutricional", count: 1 },
-  { name: "Línea Preventiva", count: 4 },
-  { name: "Línea Revitalizante", count: 4 },
-]
-
 export function Products() {
   const [selectedCategory, setSelectedCategory] = useState("Todos")
-  const [currentCategoryIndex, setCurrentCategoryIndex] = useState(0)
+  
+  // Calcular categorías dinámicamente desde los productos
+  const categories = useMemo(() => {
+    const categoryMap = new Map<string, number>()
+    products.forEach(product => {
+      const count = categoryMap.get(product.category) || 0
+      categoryMap.set(product.category, count + 1)
+    })
+    
+    const categoryArray = Array.from(categoryMap.entries()).map(([name, count]) => ({ name, count }))
+    return [
+      { name: "Todos", count: products.length },
+      ...categoryArray
+    ]
+  }, [])
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("es-CO", {
-      style: "currency",
-      currency: "COP",
-      minimumFractionDigits: 0,
-    }).format(price)
-  }
-
-  // Filtrar productos según la categoría seleccionada (memoizado para evitar re-renders innecesarios)
+  // Filtrar productos según la categoría seleccionada
   const filteredProducts = useMemo(() => {
     return selectedCategory === "Todos" 
       ? products 
       : products.filter(product => product.category === selectedCategory)
   }, [selectedCategory])
 
-  // Navegación del carrusel
-  const handlePrevious = () => {
-    setCurrentCategoryIndex((prev) => {
-      const newIndex = prev === 0 ? categories.length - 1 : prev - 1
-      setSelectedCategory(categories[newIndex].name)
-      return newIndex
-    })
-  }
+  // Usar hook de carrusel para navegación móvil
+  const { currentIndex: currentCategoryIndex, goToPrevious, goToNext, goToIndex, setCurrentIndex } = useCarousel(categories.length, 0)
 
-  const handleNext = () => {
-    setCurrentCategoryIndex((prev) => {
-      const newIndex = prev === categories.length - 1 ? 0 : prev + 1
-      setSelectedCategory(categories[newIndex].name)
-      return newIndex
-    })
-  }
+  // Sincronizar categoría seleccionada con el índice del carrusel (solo cuando cambia el índice)
+  useEffect(() => {
+    const categoryName = categories[currentCategoryIndex]?.name
+    if (categoryName && categoryName !== selectedCategory) {
+      setSelectedCategory(categoryName)
+    }
+  }, [currentCategoryIndex, categories, selectedCategory])
+
+  // Sincronizar índice del carrusel cuando cambia la categoría (desktop clicks)
+  useEffect(() => {
+    const categoryIndex = categories.findIndex(cat => cat.name === selectedCategory)
+    if (categoryIndex !== -1 && categoryIndex !== currentCategoryIndex) {
+      setCurrentIndex(categoryIndex)
+    }
+  }, [selectedCategory, categories, currentCategoryIndex, setCurrentIndex])
 
   // Manejar clic en categoría (desktop)
   const handleCategoryClick = (categoryName: string, index: number) => {
     setSelectedCategory(categoryName)
-    setCurrentCategoryIndex(index)
+    goToIndex(index)
   }
 
   return (
     <section id="productos" className="py-16 sm:py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/20 border-2 border-primary/40 shadow-lg shadow-primary/10 backdrop-blur-sm mb-4 sm:mb-6">
-            <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
-            <span className="text-xs sm:text-sm font-semibold text-primary">Nuestra Tienda</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 sm:mb-6 text-balance">
-            Productos para el <span className="text-gradient-brand">cuidado de la piel</span>
-          </h2>
-          <p className="text-base sm:text-lg lg:text-xl text-muted-foreground text-balance px-2">
-            Una amplia gama de productos dermocosméticos recomendados por nuestros profesionales, diseñados 
-            para el cuidado y rejuvenecimiento de la piel.
-          </p>
-        </div>
+        <SectionHeader
+          badge={{ icon: Sparkles, text: "Nuestra Tienda" }}
+          title={
+            <>Productos para el <span className="text-gradient-brand">cuidado de la piel</span></>
+          }
+          description="Una amplia gama de productos dermocosméticos recomendados por nuestros profesionales, diseñados para el cuidado y rejuvenecimiento de la piel."
+        />
 
         {/* Categories */}
         {/* Mobile: Carrusel */}
@@ -195,7 +186,7 @@ export function Products() {
           <div className="relative flex items-center justify-center gap-4">
             {/* Botón anterior */}
             <button
-              onClick={handlePrevious}
+              onClick={goToPrevious}
               className="p-2 rounded-full bg-background border border-border hover:bg-muted transition-colors flex-shrink-0 z-10"
               aria-label="Categoría anterior"
             >
@@ -211,15 +202,11 @@ export function Products() {
                 {categories.map((category, index) => (
                   <div key={index} className="min-w-full flex-shrink-0">
                     <div className="group relative px-2 py-2">
-                      {/* Decorative border elements - same as hero */}
-                      <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-lg transition-opacity duration-300 pointer-events-none z-0 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
-                      <div className={`absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${index === currentCategoryIndex ? 'opacity-100' : 'opacity-0'}`} />
+                      <DecorativeBorders isActive={index === currentCategoryIndex} blurIntensity="lg" roundedSize="2xl" />
                       
                       <Card className={`border-transparent transition-all duration-300 relative z-10 ${index === currentCategoryIndex ? 'border-primary/50' : ''}`}>
                         <CardContent className="p-5 py-6 text-center relative">
-                          {/* Corner accent decorations */}
-                          <div className={`absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-accent rounded-tl-md transition-opacity duration-300 pointer-events-none z-20 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
-                          <div className={`absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md transition-opacity duration-300 pointer-events-none z-20 ${index === currentCategoryIndex ? 'opacity-60' : 'opacity-0'}`} />
+                          <CornerDecorations isActive={index === currentCategoryIndex} size="small" />
                           <h3 className={`font-semibold text-sm mb-1 transition-colors leading-tight ${index === currentCategoryIndex ? 'text-primary' : 'text-foreground'}`}>
                             {category.name}
                           </h3>
@@ -234,7 +221,7 @@ export function Products() {
 
             {/* Botón siguiente */}
             <button
-              onClick={handleNext}
+              onClick={goToNext}
               className="p-2 rounded-full bg-background border border-border hover:bg-muted transition-colors flex-shrink-0 z-10"
               aria-label="Categoría siguiente"
             >
@@ -253,15 +240,11 @@ export function Products() {
                 className="group relative cursor-pointer p-1"
                 onClick={() => handleCategoryClick(category.name, index)}
               >
-                {/* Decorative border elements - same as hero */}
-                <div className={`absolute -inset-2 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-lg transition-opacity duration-300 pointer-events-none z-0 ${isActive ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'}`} />
-                <div className={`absolute -inset-1 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
+                <DecorativeBorders isActive={isActive} blurIntensity="lg" roundedSize="2xl" />
                 
                 <Card className={`border-border/50 hover:border-transparent transition-all duration-300 relative z-10 ${isActive ? 'border-primary/50' : ''}`}>
                   <CardContent className="p-4 py-5 sm:p-5 sm:py-6 text-center relative">
-                    {/* Corner accent decorations */}
-                    <div className={`absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-accent rounded-tl-md transition-opacity duration-300 pointer-events-none z-20 ${isActive ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'}`} />
-                    <div className={`absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-accent rounded-br-md transition-opacity duration-300 pointer-events-none z-20 ${isActive ? 'opacity-60' : 'opacity-0 group-hover:opacity-60'}`} />
+                    <CornerDecorations isActive={isActive} size="small" />
                     <h3 className={`font-semibold text-xs sm:text-sm mb-1 transition-colors leading-tight ${isActive ? 'text-primary' : 'group-hover:text-primary'}`}>
                       {category.name}
                     </h3>
@@ -276,7 +259,7 @@ export function Products() {
         {/* Featured Products */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10 sm:mb-12">
           {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} formatPrice={formatPrice} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
 

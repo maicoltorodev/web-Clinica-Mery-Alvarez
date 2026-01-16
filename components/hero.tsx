@@ -2,6 +2,9 @@
 
 import { Button } from "@/components/ui/button"
 import { Calendar, ArrowRight, Sparkles } from "lucide-react"
+import { scrollToSection } from "@/lib/utils"
+import { HeroImage } from "@/components/hero-image"
+import { CTA_BUTTON_CLASSES } from "@/lib/constants"
 
 export function Hero() {
   return (
@@ -36,29 +39,7 @@ export function Hero() {
             </div>
 
             {/* Image - Mobile only, below title */}
-            <div className="flex justify-center lg:hidden mb-6 sm:mb-8">
-              <div className="relative group inline-block">
-                {/* Enhanced decorative border elements - more prominent for importance */}
-                <div className="absolute -inset-6 bg-gradient-to-br from-primary/30 via-accent/30 to-primary/30 rounded-3xl opacity-70 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none z-0" />
-                <div className="absolute -inset-4 bg-gradient-to-br from-primary/25 via-accent/25 to-primary/25 rounded-2xl opacity-80 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
-                <div className="absolute -inset-2 bg-gradient-to-br from-primary/40 to-accent/40 rounded-xl transition-all duration-300 pointer-events-none z-0 opacity-100 group-hover:from-primary/50 group-hover:to-accent/50" />
-                
-                {/* Professional image container with enhanced border and shadow */}
-                <div className="relative z-10 rounded-xl overflow-hidden bg-gradient-to-br from-background to-muted/30 shadow-2xl shadow-primary/15 group-hover:shadow-primary/25 border-2 border-primary/30 group-hover:border-primary/40 transition-all duration-500">
-                  <img
-                    src="/mery.png"
-                    alt="Clínica Mery Álvarez"
-                    className="w-[200px] sm:w-[260px] h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02]"
-                    style={{
-                      filter: 'contrast(1.05) saturate(1.08) brightness(1.03)',
-                      imageRendering: 'crisp-edges',
-                    }}
-                  />
-                  {/* Professional overlay for depth */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-              </div>
-            </div>
+            <HeroImage variant="mobile" className="mb-6 sm:mb-8" />
 
             {/* Description */}
             <p className="text-base sm:text-lg lg:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto text-balance px-2">
@@ -68,14 +49,12 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12 px-4 sm:px-0">
-              <Button size="lg" className="gap-2 group w-full sm:w-auto h-12 sm:h-11 text-base">
+              <Button size="lg" className={`${CTA_BUTTON_CLASSES.base} ${CTA_BUTTON_CLASSES.primary}`}>
                 <Calendar className="h-5 w-5" />
                 <span>Agendar Valoración</span>
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button size="lg" variant="outline" className="gap-2 w-full sm:w-auto h-12 sm:h-11 text-base" onClick={() => {
-                document.getElementById("tratamientos")?.scrollIntoView({ behavior: "smooth" })
-              }}>
+              <Button size="lg" variant="outline" className={`${CTA_BUTTON_CLASSES.base} ${CTA_BUTTON_CLASSES.fullWidth}`} onClick={() => scrollToSection("tratamientos")}>
                 <span>Conocer Tratamientos</span>
               </Button>
             </div>
@@ -102,29 +81,7 @@ export function Hero() {
           </div>
 
           {/* Left Side - Image - Desktop only */}
-          <div className="hidden lg:flex justify-start flex-shrink-0 w-full lg:w-auto order-1">
-            <div className="relative group inline-block">
-              {/* Enhanced decorative border elements - more prominent for importance */}
-              <div className="absolute -inset-6 bg-gradient-to-br from-primary/30 via-accent/30 to-primary/30 rounded-3xl blur-2xl opacity-70 group-hover:opacity-90 transition-opacity duration-500 pointer-events-none z-0" />
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary/25 via-accent/25 to-primary/25 rounded-2xl blur-xl opacity-80 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-0" />
-              <div className="absolute -inset-2 bg-gradient-to-br from-primary/40 to-accent/40 rounded-xl transition-all duration-300 pointer-events-none z-0 opacity-100 group-hover:from-primary/50 group-hover:to-accent/50" />
-              
-              {/* Professional image container with enhanced border and shadow */}
-              <div className="relative z-10 rounded-xl overflow-hidden bg-gradient-to-br from-background to-muted/30 shadow-2xl shadow-primary/15 group-hover:shadow-primary/25 border-2 border-primary/30 group-hover:border-primary/40 transition-all duration-500">
-                <img
-                  src="/mery.png"
-                  alt="Clínica Mery Álvarez"
-                  className="w-[420px] h-auto object-cover relative transition-transform duration-500 group-hover:scale-[1.02]"
-                  style={{
-                    filter: 'contrast(1.05) saturate(1.08) brightness(1.03)',
-                    imageRendering: 'crisp-edges',
-                  }}
-                />
-                {/* Professional overlay for depth */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-            </div>
-          </div>
+          <HeroImage variant="desktop" />
         </div>
       </div>
     </section>
