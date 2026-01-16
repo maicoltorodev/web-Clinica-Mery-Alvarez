@@ -27,13 +27,50 @@ function CategoryCard({ category, isActive, onClick, isMobile = false }: Categor
     >
       <DecorativeBorders isActive={isActive} blurIntensity="lg" roundedSize="2xl" />
       
-      <Card className={`border-border/50 hover:border-transparent transition-all duration-300 relative z-10 ${isActive ? 'border-primary/50' : ''} ${isMobile ? 'border-transparent' : ''}`}>
+      <Card className={`border-2 transition-all duration-300 relative z-10 overflow-hidden ${
+        isActive 
+          ? 'border-primary bg-gradient-to-br from-primary/10 via-primary/5 to-accent/5 shadow-lg shadow-primary/10' 
+          : 'border-border/50 bg-card hover:border-primary/30 hover:bg-primary/2'
+      }`}>
+        {/* Fondo decorativo cuando está activo */}
+        {isActive && (
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+        )}
+        
         <CardContent className={`${isMobile ? 'p-5 py-6' : 'p-4 py-5 sm:p-5 sm:py-6'} text-center relative`}>
           <CornerDecorations isActive={isActive} size="small" />
-          <h3 className={`font-semibold ${isMobile ? 'text-sm' : 'text-xs sm:text-sm'} mb-1 transition-colors leading-tight ${isActive ? 'text-primary' : isMobile ? 'text-foreground' : 'group-hover:text-primary'}`}>
-            {category.name}
-          </h3>
-          <p className="text-xs text-muted-foreground">{category.count} productos</p>
+          
+          {/* Badge de número cuando está activo */}
+          {isActive && (
+            <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-md">
+              <span className="text-[10px] font-bold text-white">✓</span>
+            </div>
+          )}
+          
+          <div className="flex flex-col items-center gap-2">
+            <h3 className={`font-bold ${isMobile ? 'text-base sm:text-lg' : 'text-xs sm:text-sm'} transition-colors leading-tight ${
+              isActive 
+                ? 'text-primary' 
+                : 'text-foreground group-hover:text-primary'
+            }`}>
+              {category.name}
+            </h3>
+            
+            {/* Badge de cantidad mejorado */}
+            <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all border ${
+              isActive
+                ? 'bg-primary/15 text-primary border-primary/30 shadow-sm'
+                : 'bg-muted/50 text-muted-foreground border-border/50 group-hover:bg-primary/10 group-hover:text-primary group-hover:border-primary/20'
+            }`}>
+              <span className="font-bold">{category.count}</span>
+              <span className="text-[10px] opacity-80">{category.count === 1 ? 'item' : 'items'}</span>
+            </div>
+          </div>
+          
+          {/* Indicador activo mejorado */}
+          {isActive && (
+            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary" />
+          )}
         </CardContent>
       </Card>
     </div>
@@ -225,59 +262,119 @@ export function Products() {
           description="Una amplia gama de productos dermocosméticos recomendados por nuestros profesionales, diseñados para el cuidado y rejuvenecimiento de la piel."
         />
 
-        {/* Categories */}
+        {/* Categories Filter */}
         {/* Mobile: Carrusel */}
         <div className="lg:hidden mb-10 sm:mb-12">
-          <div className="relative flex items-center justify-center gap-4">
-            {/* Botón anterior */}
-            <button
-              onClick={goToPrevious}
-              className="p-2 rounded-full bg-background border border-border hover:bg-muted transition-colors flex-shrink-0 z-10"
-              aria-label="Categoría anterior"
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-
-            {/* Contenedor del carrusel con overflow hidden */}
-            <div className="flex-1 max-w-xs overflow-hidden">
-              <div 
-                className="flex transition-transform duration-300 ease-in-out"
-                style={{ transform: `translateX(-${currentCategoryIndex * 100}%)` }}
-              >
-                {categories.map((category, index) => (
-                  <div key={index} className="min-w-full flex-shrink-0">
-                    <CategoryCard
-                      category={category}
-                      isActive={index === currentCategoryIndex}
-                      onClick={() => handleCategoryClick(category.name, index)}
-                      isMobile={true}
-                    />
-                  </div>
-                ))}
+          {/* Header del filtro mejorado */}
+          <div className="flex items-center justify-center gap-3 mb-5 sm:mb-6">
+            <div className="h-px bg-gradient-to-r from-transparent via-border to-border flex-1 max-w-20" />
+            <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border-2 border-primary/30 shadow-md backdrop-blur-sm">
+              <div className="p-1.5 rounded-full bg-primary/20">
+                <Sparkles className="h-4 w-4 text-primary" />
               </div>
+              <span className="text-sm font-bold text-primary uppercase tracking-wider">Filtrar por Categoría</span>
             </div>
+            <div className="h-px bg-gradient-to-r from-border via-border to-transparent flex-1 max-w-20" />
+          </div>
+          
+          {/* Contenedor principal del carrusel mejorado */}
+          <div className="relative bg-gradient-to-br from-muted/40 via-muted/20 to-muted/40 rounded-3xl p-5 sm:p-6 border-2 border-border/60 shadow-xl backdrop-blur-sm">
+            {/* Patrón decorativo de fondo */}
+            <div className="absolute inset-0 opacity-5 overflow-hidden rounded-3xl">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-primary rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent rounded-full blur-2xl" />
+            </div>
+            
+            <div className="relative flex items-center justify-center gap-3 sm:gap-4">
+              {/* Botón anterior mejorado */}
+              <button
+                onClick={goToPrevious}
+                className="p-3 sm:p-3.5 rounded-full bg-background border-2 border-primary/30 hover:border-primary hover:bg-gradient-to-br hover:from-primary/10 hover:to-accent/10 transition-all duration-300 flex-shrink-0 z-10 shadow-lg hover:shadow-xl group"
+                aria-label="Categoría anterior"
+              >
+                <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 text-foreground group-hover:text-primary transition-colors" />
+              </button>
 
-            {/* Botón siguiente */}
-            <button
-              onClick={goToNext}
-              className="p-2 rounded-full bg-background border border-border hover:bg-muted transition-colors flex-shrink-0 z-10"
-              aria-label="Categoría siguiente"
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
+              {/* Contenedor del carrusel con overflow hidden */}
+              <div className="flex-1 max-w-xs overflow-hidden">
+                <div 
+                  className="flex transition-transform duration-300 ease-in-out"
+                  style={{ transform: `translateX(-${currentCategoryIndex * 100}%)` }}
+                >
+                  {categories.map((category, index) => (
+                    <div key={index} className="min-w-full flex-shrink-0">
+                      <CategoryCard
+                        category={category}
+                        isActive={index === currentCategoryIndex}
+                        onClick={() => handleCategoryClick(category.name, index)}
+                        isMobile={true}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Botón siguiente mejorado */}
+              <button
+                onClick={goToNext}
+                className="p-3 sm:p-3.5 rounded-full bg-background border-2 border-primary/30 hover:border-primary hover:bg-gradient-to-br hover:from-primary/10 hover:to-accent/10 transition-all duration-300 flex-shrink-0 z-10 shadow-lg hover:shadow-xl group"
+                aria-label="Categoría siguiente"
+              >
+                <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 text-foreground group-hover:text-primary transition-colors" />
+              </button>
+            </div>
+            
+            {/* Indicadores de posición mejorados */}
+            <div className="flex justify-center gap-2 mt-5 sm:mt-6">
+              {categories.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleCategoryClick(categories[index].name, index)}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                    index === currentCategoryIndex
+                      ? 'w-10 bg-gradient-to-r from-primary via-accent to-primary shadow-md'
+                      : 'w-2.5 bg-border/60 hover:bg-primary/60 hover:w-3'
+                  }`}
+                  aria-label={`Ir a categoría ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
         {/* Desktop: Grid de categorías */}
-        <div className="hidden lg:grid lg:grid-cols-7 gap-3 sm:gap-4 mb-10 sm:mb-12">
-          {categories.map((category, index) => (
-            <CategoryCard
-              key={index}
-              category={category}
-              isActive={selectedCategory === category.name}
-              onClick={() => handleCategoryClick(category.name, index)}
-            />
-          ))}
+        <div className="hidden lg:block mb-10 sm:mb-12">
+          {/* Header del filtro mejorado */}
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="h-px bg-gradient-to-r from-transparent via-border to-border flex-1 max-w-32" />
+            <div className="flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-primary/15 to-accent/15 border-2 border-primary/30 shadow-lg backdrop-blur-sm">
+              <div className="p-1.5 rounded-full bg-primary/20">
+                <Sparkles className="h-4 w-4 text-primary" />
+              </div>
+              <span className="text-sm font-bold text-primary uppercase tracking-wider">Filtrar Categorías</span>
+            </div>
+            <div className="h-px bg-gradient-to-r from-border via-border to-transparent flex-1 max-w-32" />
+          </div>
+          
+          {/* Grid de categorías con contenedor mejorado */}
+          <div className="relative bg-gradient-to-br from-muted/30 via-muted/10 to-muted/30 rounded-2xl p-4 border border-border/50 shadow-lg backdrop-blur-sm">
+            {/* Patrón decorativo sutil */}
+            <div className="absolute inset-0 opacity-3 overflow-hidden rounded-2xl">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-primary rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-accent rounded-full blur-2xl" />
+            </div>
+            
+            <div className="relative grid lg:grid-cols-7 gap-3">
+              {categories.map((category, index) => (
+                <CategoryCard
+                  key={index}
+                  category={category}
+                  isActive={selectedCategory === category.name}
+                  onClick={() => handleCategoryClick(category.name, index)}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Featured Products */}
