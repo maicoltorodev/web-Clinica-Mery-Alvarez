@@ -8,6 +8,7 @@ import { useInViewportCenter } from "@/lib/hooks"
 
 const products = [
   {
+    id: "advance-repair-complex",
     name: "Advance Repair Complex",
     price: 153399,
     category: "Línea Antiedad",
@@ -15,6 +16,7 @@ const products = [
     featured: true,
   },
   {
+    id: "batido-verde-nutricional",
     name: "Batido Verde Nutricional",
     price: 89900,
     category: "Línea Nutricional",
@@ -22,6 +24,7 @@ const products = [
     featured: true,
   },
   {
+    id: "contorno-ojos-anti-edad",
     name: "Contorno de Ojos Anti-edad",
     price: 155000,
     category: "Línea Antiedad",
@@ -29,6 +32,7 @@ const products = [
     featured: true,
   },
   {
+    id: "jabon-suave-vitaminas",
     name: "Jabón Suave con vitaminas",
     price: 83000,
     category: "Línea Preventiva",
@@ -36,6 +40,7 @@ const products = [
     featured: true,
   },
   {
+    id: "emulsion-caliente",
     name: "Emulsión Caliente",
     price: 94600,
     category: "Línea Corporal",
@@ -43,6 +48,7 @@ const products = [
     featured: true,
   },
   {
+    id: "emulsion-triactiva-facial",
     name: "Emulsión Triactiva Facial",
     price: 83000,
     category: "Línea Revitalizante",
@@ -50,6 +56,7 @@ const products = [
     featured: true,
   },
   {
+    id: "champu-capilar",
     name: "Champú Capilar",
     price: 89000,
     category: "Línea Capilar",
@@ -57,6 +64,7 @@ const products = [
     featured: true,
   },
   {
+    id: "factor-renovador-4",
     name: "Factor Renovador 4",
     price: 155700,
     category: "Línea Antiedad",
@@ -210,10 +218,10 @@ export function Products() {
 
         {/* Featured Products */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10 sm:mb-12">
-          {filteredProducts.map((product, index) => {
-            const { elementRef, isInCenter } = useInViewportCenter(0.35)
+          {filteredProducts.map((product) => {
+            const { elementRef, isInCenter } = useInViewportCenter(0.35, `product-${product.id}`)
             return (
-              <div key={index} ref={elementRef} className="group relative">
+              <div key={product.id} ref={elementRef} className="group relative">
               {/* Decorative border elements - same as hero */}
               <div className={`absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-60 lg:opacity-0 lg:group-hover:opacity-60' : 'opacity-0 lg:group-hover:opacity-60'}`} />
               <div className={`absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl transition-opacity duration-300 pointer-events-none z-0 ${isInCenter ? 'opacity-100 lg:opacity-0 lg:group-hover:opacity-100' : 'opacity-0 lg:group-hover:opacity-100'}`} />

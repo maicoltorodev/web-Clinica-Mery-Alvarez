@@ -112,10 +112,10 @@ export function ViewportCenterProvider({ children }: { children: React.ReactNode
  * Hook que detecta cuando un elemento está en el centro del viewport
  * Solo un elemento puede estar activo a la vez (el más cercano al centro)
  */
-export function useInViewportCenter(threshold: number = 0.4) {
+export function useInViewportCenter(threshold: number = 0.4, elementId?: string) {
   const [isInCenter, setIsInCenter] = useState(false)
   const elementRef = useRef<HTMLDivElement>(null)
-  const elementIdRef = useRef<string>(`element-${Math.random().toString(36).substr(2, 9)}`)
+  const elementIdRef = useRef<string>(elementId || `element-${Math.random().toString(36).substr(2, 9)}`)
   const context = useContext(ViewportCenterContext)
 
   useEffect(() => {

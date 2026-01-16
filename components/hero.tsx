@@ -18,34 +18,8 @@ export function Hero() {
       {/* Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col lg:grid lg:grid-cols-[1fr_1.5fr] gap-8 sm:gap-12 lg:gap-16 items-center max-w-7xl mx-auto">
-          {/* Left Side - Image */}
-          <div className="flex justify-center lg:justify-start flex-shrink-0 w-full lg:w-auto">
-            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md group">
-              {/* Decorative border elements */}
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-60 group-hover:opacity-80 transition-opacity" />
-              <div className="absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl" />
-              
-              {/* Main image container */}
-              <div className="relative bg-gradient-to-br from-background to-muted/50 p-3 sm:p-4 rounded-xl shadow-2xl border border-border/50">
-                <div className="relative overflow-hidden rounded-lg">
-                  <img
-                    src="/mery.png"
-                    alt="Clínica Mery Álvarez"
-                    className="w-full h-auto object-contain relative z-10"
-                  />
-                  {/* Subtle overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 pointer-events-none" />
-                </div>
-                
-                {/* Corner accent decorations */}
-                <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary rounded-tl-lg opacity-60" />
-                <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg opacity-60" />
-              </div>
-            </div>
-          </div>
-
           {/* Center - Content */}
-          <div className="w-full text-center px-2 sm:px-0">
+          <div className="w-full text-center px-2 sm:px-0 order-1 lg:order-2">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-primary/10 border border-primary/20 mb-6 sm:mb-8">
               <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
@@ -99,6 +73,32 @@ export function Hero() {
               <div>
                 <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gradient-brand mb-1 sm:mb-2">IPS</div>
                 <div className="text-xs sm:text-sm text-muted-foreground leading-tight">Certificada BPC</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Left Side - Image */}
+          <div className="flex justify-center lg:justify-start flex-shrink-0 w-full lg:w-auto order-2 lg:order-1">
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md group">
+              {/* Decorative border elements */}
+              <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-60 group-hover:opacity-80 transition-opacity" />
+              <div className="absolute -inset-2 bg-gradient-to-br from-primary/30 to-accent/30 rounded-xl" />
+              
+              {/* Main image container */}
+              <div className="relative bg-gradient-to-br from-background to-muted/50 p-3 sm:p-4 rounded-xl shadow-2xl border border-border/50">
+                <div className="relative overflow-hidden rounded-lg">
+                  <img
+                    src="/mery.png"
+                    alt="Clínica Mery Álvarez"
+                    className="w-full h-auto object-contain relative z-10"
+                  />
+                  {/* Subtle overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-accent/5 pointer-events-none" />
+                </div>
+                
+                {/* Corner accent decorations */}
+                <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-primary rounded-tl-lg opacity-60" />
+                <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-accent rounded-br-lg opacity-60" />
               </div>
             </div>
           </div>
