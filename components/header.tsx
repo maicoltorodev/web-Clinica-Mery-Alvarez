@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
 import { useState, useEffect, useCallback, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Calendar, ShoppingBag, Users, Sparkles, UserCheck, MessageSquare, Phone, ShoppingCart } from "lucide-react"
@@ -13,9 +14,12 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { isMobileMenuOpen, setIsMobileMenuOpen } = useMobileMenu()
   const { getTotalItems } = useCart()
+  const pathname = usePathname()
+  const router = useRouter()
   const animationFrameRef = useRef<number | null>(null)
   const isMountedRef = useRef(true)
   const cartItemsCount = getTotalItems()
+  const isHomePage = pathname === "/"
 
   useEffect(() => {
     isMountedRef.current = true
@@ -80,10 +84,31 @@ export function Header() {
       document.body.style.overflow = ''
     }
   }, [isMobileMenuOpen])
+
+  // Función para manejar navegación a secciones
+  const handleNavClick = useCallback((href: string, e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    const sectionId = href.replace("#", "")
+    
+    if (isHomePage) {
+      // Si estamos en la página principal, hacer scroll suave
+      scrollToSection(sectionId)
+    } else {
+      // Si estamos en otra página, navegar a la página principal con el hash
+      router.push(`/${href}`)
+    }
+  }, [isHomePage, router])
   
   const handleScrollToContact = useCallback(() => {
-    scrollToSection("contacto")
-  }, [])
+    if (isHomePage) {
+      scrollToSection("contacto")
+    } else {
+      router.push("/#contacto")
+      setTimeout(() => {
+        scrollToSection("contacto")
+      }, 100)
+    }
+  }, [isHomePage, router])
 
   const navItems = [
     { label: "Nosotros", href: "#nosotros", icon: Users },
@@ -108,7 +133,7 @@ export function Header() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20 lg:h-24">
           {/* Logo */}
-          <a href="#inicio" className="flex items-center flex-shrink-0 group">
+          <Link href="/" className="flex items-center flex-shrink-0 group">
         <Image
           src="/flower.gif"
           alt="Clínica Mery Álvarez"
@@ -119,7 +144,7 @@ export function Header() {
           quality={85}
           unoptimized
         />
-          </a>
+          </Link>
 
           {/* Mobile CTA Button - Centered */}
           {!isMobileMenuOpen && (
@@ -144,7 +169,8 @@ export function Header() {
                 <a
                   key={item.href}
                   href={item.href}
-                  className="flex items-center gap-2 text-base font-semibold text-foreground hover:text-primary transition-colors relative group"
+                  onClick={(e) => handleNavClick(item.href, e)}
+                  className="flex items-center gap-2 text-base font-semibold text-foreground hover:text-primary transition-colors relative group cursor-pointer"
                 >
                   <Icon className="h-4 w-4" />
                   {item.label}
@@ -230,8 +256,11 @@ export function Header() {
                     <a
                       key={item.href}
                       href={item.href}
-                      className="group flex items-center gap-4 px-4 py-4 rounded-xl hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all duration-200 mb-2"
-                      onClick={() => setIsMobileMenuOpen(false)}
+                      onClick={(e) => {
+                        handleNavClick(item.href, e)
+                        setIsMobileMenuOpen(false)
+                      }}
+                      className="group flex items-center gap-4 px-4 py-4 rounded-xl hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all duration-200 mb-2 cursor-pointer"
                     >
                       <div className="flex-shrink-0 p-2.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors">
                         <Icon className="h-5 w-5 text-primary" />
