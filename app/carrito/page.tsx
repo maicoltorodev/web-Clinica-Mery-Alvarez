@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { WhatsAppFAB } from "@/components/whatsapp-fab"
@@ -10,37 +9,28 @@ import { ShoppingCart, Trash2, Plus, Minus, ArrowRight, Package } from "lucide-r
 import { SectionHeader } from "@/components/section-header"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { formatPrice } from "@/lib/utils"
-
-interface CartItem {
-  id: string
-  name: string
-  price: number
-  quantity: number
-  image: string
-  category: string
-}
+import { useCart } from "@/lib/cart-context"
 
 export default function CarritoPage() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const { cartItems, updateQuantity, removeFromCart, getTotalPrice } = useCart()
+  const router = useRouter()
 
-  const updateQuantity = (id: string, change: number) => {
-    setCartItems((items) =>
-      items.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + change) }
-          : item
-      )
-    )
-  }
-
-  const removeItem = (id: string) => {
-    setCartItems((items) => items.filter((item) => item.id !== id))
-  }
-
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const subtotal = getTotalPrice()
   const iva = subtotal * 0.19
   const total = subtotal + iva
+
+  const handleQuantityChange = (id: string, change: number) => {
+    const item = cartItems.find(i => i.id === id)
+    if (item) {
+      updateQuantity(id, item.quantity + change)
+    }
+  }
+
+  const handleCheckout = () => {
+    router.push("/checkout")
+  }
 
   return (
     <main className="min-h-screen">
@@ -103,7 +93,7 @@ export default function CarritoPage() {
                                   variant="outline"
                                   size="icon"
                                   className="h-8 w-8"
-                                  onClick={() => updateQuantity(item.id, -1)}
+                                  onClick={() => handleQuantityChange(item.id, -1)}
                                 >
                                   <Minus className="h-4 w-4" />
                                 </Button>
@@ -112,7 +102,7 @@ export default function CarritoPage() {
                                   variant="outline"
                                   size="icon"
                                   className="h-8 w-8"
-                                  onClick={() => updateQuantity(item.id, 1)}
+                                  onClick={() => handleQuantityChange(item.id, 1)}
                                 >
                                   <Plus className="h-4 w-4" />
                                 </Button>
@@ -121,7 +111,7 @@ export default function CarritoPage() {
                                 variant="ghost"
                                 size="icon"
                                 className="h-8 w-8 text-destructive hover:text-destructive"
-                                onClick={() => removeItem(item.id)}
+                                onClick={() => removeFromCart(item.id)}
                               >
                                 <Trash2 className="h-4 w-4" />
                               </Button>
@@ -155,7 +145,7 @@ export default function CarritoPage() {
                         </div>
                       </div>
 
-                      <Button size="lg" className="w-full gap-2">
+                      <Button size="lg" className="w-full gap-2" onClick={handleCheckout} disabled={cartItems.length === 0}>
                         <span>Proceder al Pago</span>
                         <ArrowRight className="h-5 w-5" />
                       </Button>

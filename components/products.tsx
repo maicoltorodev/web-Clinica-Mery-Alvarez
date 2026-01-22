@@ -5,13 +5,14 @@ import Link from "next/link"
 import { useState, useMemo, useEffect, memo, useRef } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ShoppingCart, ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react"
+import { ShoppingCart, ArrowRight, Sparkles, ChevronLeft, ChevronRight, Check } from "lucide-react"
 import { useInViewportCenter, useCarousel } from "@/lib/hooks"
 import { formatPrice } from "@/lib/utils"
 import { SectionHeader } from "@/components/section-header"
 import { DecorativeBorders } from "@/components/decorative/decorative-borders"
 import { CornerDecorations } from "@/components/decorative/corner-decorations"
 import { OverlayGradient } from "@/components/decorative/overlay-gradient"
+import { useCart } from "@/lib/cart-context"
 
 // Componente para card de categoría
 interface CategoryCardProps {
@@ -82,6 +83,23 @@ function CategoryCard({ category, isActive, onClick, isMobile = false }: Categor
 // Componente separado para cada producto para mantener hooks estables
 const ProductCard = memo(function ProductCard({ product }: { product: typeof products[0] }) {
   const { elementRef, isInCenter } = useInViewportCenter(0.35, `product-${product.id}`)
+  const { addToCart, cartItems } = useCart()
+  const [justAdded, setJustAdded] = useState(false)
+  
+  const isInCart = cartItems.some(item => item.id === product.id)
+  
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault()
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      category: product.category,
+    })
+    setJustAdded(true)
+    setTimeout(() => setJustAdded(false), 2000)
+  }
   
   return (
     <div key={product.id} ref={elementRef} className="group relative">
@@ -113,12 +131,22 @@ const ProductCard = memo(function ProductCard({ product }: { product: typeof pro
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0 px-4 pb-4">
-          <Link href="/carrito">
-            <Button className={`w-full gap-2 transition-colors h-10 sm:h-11 text-sm sm:text-base ${isInCenter ? '!bg-accent !text-background' : ''} lg:!bg-gradient-to-r lg:!from-primary lg:!to-accent lg:!text-background lg:group-hover:!bg-accent lg:group-hover:!text-background`}>
-              <ShoppingCart className="h-4 w-4" />
-              Añadir al carrito
-            </Button>
-          </Link>
+          <Button 
+            onClick={handleAddToCart}
+            className={`w-full gap-2 transition-colors h-10 sm:h-11 text-sm sm:text-base ${isInCenter ? '!bg-accent !text-background' : ''} lg:!bg-gradient-to-r lg:!from-primary lg:!to-accent lg:!text-background lg:group-hover:!bg-accent lg:group-hover:!text-background ${justAdded || isInCart ? '!bg-green-600 !text-white' : ''}`}
+          >
+            {justAdded || isInCart ? (
+              <>
+                <Check className="h-4 w-4" />
+                {justAdded ? 'Agregado' : 'En carrito'}
+              </>
+            ) : (
+              <>
+                <ShoppingCart className="h-4 w-4" />
+                Añadir al carrito
+              </>
+            )}
+          </Button>
         </CardContent>
       </Card>
     </div>

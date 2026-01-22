@@ -4,15 +4,18 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, useEffect, useCallback, useRef } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, X, Calendar, ShoppingBag, Users, Sparkles, UserCheck, MessageSquare, Phone } from "lucide-react"
+import { Menu, X, Calendar, ShoppingBag, Users, Sparkles, UserCheck, MessageSquare, Phone, ShoppingCart } from "lucide-react"
 import { useMobileMenu } from "@/lib/mobile-menu-context"
 import { scrollToSection } from "@/lib/utils"
+import { useCart } from "@/lib/cart-context"
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { isMobileMenuOpen, setIsMobileMenuOpen } = useMobileMenu()
+  const { getTotalItems } = useCart()
   const animationFrameRef = useRef<number | null>(null)
   const isMountedRef = useRef(true)
+  const cartItemsCount = getTotalItems()
 
   useEffect(() => {
     isMountedRef.current = true
@@ -153,6 +156,17 @@ export function Header() {
 
           {/* Desktop CTA Button */}
           <div className="hidden lg:flex items-center space-x-4">
+            <Link href="/carrito" className="relative">
+              <Button size="sm" variant="outline" className="gap-2 relative">
+                <ShoppingCart className="h-4 w-4" />
+                <span className="hidden sm:inline">Carrito</span>
+                {cartItemsCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-primary text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {cartItemsCount > 9 ? '9+' : cartItemsCount}
+                  </span>
+                )}
+              </Button>
+            </Link>
             <Link href="/agendar">
               <Button size="sm" className="gap-2">
                 <Calendar className="h-4 w-4" />
@@ -229,6 +243,26 @@ export function Header() {
                     </a>
                   )
                 })}
+                
+                {/* Carrito en móvil */}
+                <Link
+                  href="/carrito"
+                  className="group flex items-center gap-4 px-4 py-4 rounded-xl hover:bg-gradient-to-r hover:from-primary/10 hover:to-accent/10 transition-all duration-200 mb-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <div className="flex-shrink-0 p-2.5 rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors relative">
+                    <ShoppingCart className="h-5 w-5 text-primary" />
+                    {cartItemsCount > 0 && (
+                      <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                        {cartItemsCount > 9 ? '9+' : cartItemsCount}
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-base font-semibold text-foreground group-hover:text-primary transition-colors flex-1">
+                    Carrito {cartItemsCount > 0 && `(${cartItemsCount})`}
+                  </span>
+                  <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-primary/20 group-hover:bg-primary transition-colors opacity-0 group-hover:opacity-100" />
+                </Link>
               </nav>
             </div>
           </>

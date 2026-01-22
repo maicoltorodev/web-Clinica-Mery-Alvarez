@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { ViewportCenterProvider } from "@/lib/hooks"
 import { MobileMenuProvider } from "@/lib/mobile-menu-context"
+import { CartProvider } from "@/lib/cart-context"
 
 const geist = Geist({ subsets: ["latin"] })
 const geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -84,7 +85,9 @@ export default function RootLayout({
             <body className={`${geist.className} antialiased`}>
               <ViewportCenterProvider>
                 <MobileMenuProvider>
-                  {children}
+                  <CartProvider>
+                    {children}
+                  </CartProvider>
                 </MobileMenuProvider>
               </ViewportCenterProvider>
             </body>
