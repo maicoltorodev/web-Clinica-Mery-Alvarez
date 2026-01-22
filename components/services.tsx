@@ -1,6 +1,7 @@
 "use client"
 
 import { memo } from "react"
+import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Sparkles, Heart, Flower, Eye } from "lucide-react"
@@ -125,15 +126,17 @@ const ServiceCard = memo(function ServiceCard({ service, index }: { service: typ
           
           {/* Botón mejorado */}
           <div className="mt-auto pt-4 border-t border-border/50">
-            <Button 
-              variant="outline" 
-              className="w-full group/btn bg-gradient-to-r from-background to-muted/50 lg:hover:from-primary lg:hover:to-accent lg:hover:text-primary-foreground border-primary/20 lg:hover:border-primary transition-colors duration-300 h-11 sm:h-12 text-sm sm:text-base font-semibold shadow-sm lg:hover:shadow-lg"
-            >
-              <span className="lg:group-hover/btn:translate-x-1 transition-transform duration-300 inline-block">
-                Ver Detalles
-              </span>
-              <ArrowRight className="ml-2 h-4 w-4 lg:group-hover/btn:translate-x-1 transition-transform duration-300" />
-            </Button>
+            <Link href="/tratamientos" className="block">
+              <Button 
+                variant="outline" 
+                className="w-full group/btn bg-gradient-to-r from-background to-muted/50 lg:hover:from-primary lg:hover:to-accent lg:hover:text-primary-foreground border-primary/20 lg:hover:border-primary transition-colors duration-300 h-11 sm:h-12 text-sm sm:text-base font-semibold shadow-sm lg:hover:shadow-lg"
+              >
+                <span className="lg:group-hover/btn:translate-x-1 transition-transform duration-300 inline-block">
+                  Ver Detalles
+                </span>
+                <ArrowRight className="ml-2 h-4 w-4 lg:group-hover/btn:translate-x-1 transition-transform duration-300" />
+              </Button>
+            </Link>
           </div>
         </CardContent>
         
@@ -167,10 +170,12 @@ export function Services() {
 
         {/* CTA */}
         <div className="text-center mt-12 sm:mt-16">
-          <Button size="lg" className="gap-2 h-12 sm:h-11 w-full sm:w-auto text-base">
-            Ver Todos los Tratamientos
-            <ArrowRight className="h-5 w-5" />
-          </Button>
+          <Link href="/tratamientos">
+            <Button size="lg" className="gap-2 h-12 sm:h-11 w-full sm:w-auto text-base">
+              Ver Todos los Tratamientos
+              <ArrowRight className="h-5 w-5" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

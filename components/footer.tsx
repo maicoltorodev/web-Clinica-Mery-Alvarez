@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { Phone, Mail, MapPin, Clock, Home, Users, Sparkles, UserCheck, MessageSquare, Calendar, ArrowRight, Smile, Users2, Flower, Zap } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { scrollToSection } from "@/lib/utils"
@@ -150,11 +151,13 @@ export function Footer() {
               <h3 className="text-lg sm:text-xl font-semibold mb-2">Te ayudamos a rejuvenecer naturalmente</h3>
               <p className="text-sm sm:text-base text-background/70">Agenda tu cita de valoración en cualquiera de nuestras sedes. ¡Recuerda que TÚ eres tu mejor inversión!</p>
             </div>
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-foreground w-full md:w-auto h-12 sm:h-11 text-base gap-2 group" onClick={() => scrollToSection("contacto")}>
-              <Calendar className="h-5 w-5" />
-              <span>Agendar Cita Ahora</span>
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <Link href="/agendar">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-foreground w-full md:w-auto h-12 sm:h-11 text-base gap-2 group">
+                <Calendar className="h-5 w-5" />
+                <span>Agendar Cita Ahora</span>
+                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
           </div>
         </div>
 

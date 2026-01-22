@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Calendar, ArrowRight, Sparkles, Award, Shield, Heart } from "lucide-react"
 import { scrollToSection } from "@/lib/utils"
@@ -60,15 +61,16 @@ export function CTAClosing() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
-            <Button 
-              size="lg" 
-              className="gap-2 group h-12 sm:h-11 text-base w-full sm:w-auto"
-              onClick={() => scrollToSection("contacto")}
-            >
-              <Calendar className="h-5 w-5" />
-              <span>Agendar Valoración</span>
-              <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Button>
+            <Link href="/agendar">
+              <Button 
+                size="lg" 
+                className="gap-2 group h-12 sm:h-11 text-base w-full sm:w-auto"
+              >
+                <Calendar className="h-5 w-5" />
+                <span>Agendar Valoración</span>
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </Link>
             <Button 
               size="lg" 
               variant="outline" 

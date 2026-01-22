@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { useState, useMemo, useEffect, memo, useRef } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -112,10 +113,12 @@ const ProductCard = memo(function ProductCard({ product }: { product: typeof pro
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-0 px-4 pb-4">
-          <Button className={`w-full gap-2 transition-colors h-10 sm:h-11 text-sm sm:text-base ${isInCenter ? '!bg-accent !text-background' : ''} lg:!bg-gradient-to-r lg:!from-primary lg:!to-accent lg:!text-background lg:group-hover:!bg-accent lg:group-hover:!text-background`}>
-            <ShoppingCart className="h-4 w-4" />
-            Añadir al carrito
-          </Button>
+          <Link href="/carrito">
+            <Button className={`w-full gap-2 transition-colors h-10 sm:h-11 text-sm sm:text-base ${isInCenter ? '!bg-accent !text-background' : ''} lg:!bg-gradient-to-r lg:!from-primary lg:!to-accent lg:!text-background lg:group-hover:!bg-accent lg:group-hover:!text-background`}>
+              <ShoppingCart className="h-4 w-4" />
+              Añadir al carrito
+            </Button>
+          </Link>
         </CardContent>
       </Card>
     </div>
@@ -391,10 +394,12 @@ export function Products() {
 
         {/* CTA */}
         <div className="text-center">
-          <Button size="lg" variant="outline" className="gap-2 h-12 sm:h-11 w-full sm:w-auto text-base">
-            Ver más productos
-            <ArrowRight className="h-5 w-5" />
-          </Button>
+          <Link href="/productos">
+            <Button size="lg" variant="outline" className="gap-2 h-12 sm:h-11 w-full sm:w-auto text-base">
+              Ver más productos
+              <ArrowRight className="h-5 w-5" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

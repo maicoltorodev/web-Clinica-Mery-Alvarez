@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Calendar, X, Phone } from "lucide-react"
 
@@ -34,14 +35,18 @@ export function FloatingCTA() {
           </button>
         </div>
         <div className="flex flex-col gap-2">
-          <Button size="sm" className="w-full gap-2">
-            <Calendar className="h-4 w-4" />
-            <span>Agendar Cita</span>
-          </Button>
-          <Button size="sm" variant="outline" className="w-full gap-2">
-            <Phone className="h-4 w-4" />
-            <span>Llamar Ahora</span>
-          </Button>
+          <Link href="/agendar">
+            <Button size="sm" className="w-full gap-2">
+              <Calendar className="h-4 w-4" />
+              <span>Agendar Cita</span>
+            </Button>
+          </Link>
+          <a href="tel:+573163433000">
+            <Button size="sm" variant="outline" className="w-full gap-2">
+              <Phone className="h-4 w-4" />
+              <span>Llamar Ahora</span>
+            </Button>
+          </a>
         </div>
       </div>
     </div>

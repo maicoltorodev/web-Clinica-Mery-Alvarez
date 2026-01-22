@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Calendar, ArrowRight, Sparkles } from "lucide-react"
 import { scrollToSection } from "@/lib/utils"
@@ -54,11 +55,13 @@ export function Hero() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12 px-4 sm:px-0">
-              <Button size="lg" className={`${CTA_BUTTON_CLASSES.base} ${CTA_BUTTON_CLASSES.primary}`}>
-                <Calendar className="h-5 w-5" />
-                <span>Agendar Valoración</span>
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
+              <Link href="/agendar">
+                <Button size="lg" className={`${CTA_BUTTON_CLASSES.base} ${CTA_BUTTON_CLASSES.primary}`}>
+                  <Calendar className="h-5 w-5" />
+                  <span>Agendar Valoración</span>
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
               <Button size="lg" variant="outline" className={`${CTA_BUTTON_CLASSES.base} ${CTA_BUTTON_CLASSES.fullWidth}`} onClick={() => scrollToSection("tratamientos")}>
                 <span>Conocer Tratamientos</span>
               </Button>

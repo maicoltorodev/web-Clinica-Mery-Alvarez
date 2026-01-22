@@ -1,6 +1,7 @@
 "use client"
 
 import Image from "next/image"
+import Link from "next/link"
 import { useState, useEffect, useCallback, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Menu, X, Calendar, ShoppingBag, Users, Sparkles, UserCheck, MessageSquare, Phone } from "lucide-react"
@@ -120,14 +121,15 @@ export function Header() {
           {/* Mobile CTA Button - Centered */}
           {!isMobileMenuOpen && (
             <div className="flex-1 flex justify-center lg:hidden px-4">
-              <Button 
-                size="sm" 
-                className="gap-2 h-9 text-xs sm:text-sm px-2 sm:px-4"
-                onClick={handleScrollToContact}
-              >
-                <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span>Agendar Cita</span>
-              </Button>
+              <Link href="/agendar">
+                <Button 
+                  size="sm" 
+                  className="gap-2 h-9 text-xs sm:text-sm px-2 sm:px-4"
+                >
+                  <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                  <span>Agendar Cita</span>
+                </Button>
+              </Link>
             </div>
           )}
 
@@ -151,10 +153,12 @@ export function Header() {
 
           {/* Desktop CTA Button */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Button size="sm" className="gap-2" onClick={handleScrollToContact}>
-              <Calendar className="h-4 w-4" />
-              <span>Agendar Cita</span>
-            </Button>
+            <Link href="/agendar">
+              <Button size="sm" className="gap-2">
+                <Calendar className="h-4 w-4" />
+                <span>Agendar Cita</span>
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
